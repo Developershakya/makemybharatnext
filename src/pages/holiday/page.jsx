@@ -1,8 +1,11 @@
 import { AiOutlinePicture, AiOutlineRight } from "react-icons/ai"; // Ant Design icons
 import { MdPhoto, MdPhotoLibrary } from "react-icons/md";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
+import Header from "@/components/Header"; // Assuming you have a Header component
 export default function HolidayPage() {
   return (
+    <>
+    <Header />
     <div>
       <div
         className="h-[300px] w-full relative flex justify-center items-center bg-black"
@@ -193,6 +196,7 @@ export default function HolidayPage() {
     </div>
 
 </div>
+</>
   );
 }
 
