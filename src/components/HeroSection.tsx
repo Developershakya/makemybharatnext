@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import {
   Plane,
   Hotel,
@@ -70,33 +71,49 @@ export default function HeroSection() {
         <Card>
           <CardContent>
             <Tabs defaultValue="flights" className="w-full">
-              <TabsList className="grid w-full grid-cols-5   mb-6 bg-orange-0 ">
+              <TabsList className="grid w-full grid-cols-5  mb-6 bg- ">
+                
+                  {/* Flights */}
                 <TabsTrigger
                   value="flights"
                   className="flex items-center gap-2"
                 >
+                <Link href="/flight">
                   <Plane className="w-10 h-10" />
-                  {/* Flights */}
+                </Link>
                 </TabsTrigger>
+                
+                 {/* Hotels */}
                 <TabsTrigger value="hotels" className="flex items-center gap-2">
+                <Link href="/hotel">
                   <Hotel className="w-10 h-10" />
-                  {/* Hotels */}
+                </Link>
                 </TabsTrigger>
+
+                  {/* Packages */}
                 <TabsTrigger
                   value="packages"
                   className="flex items-center gap-2"
                 >
+                <Link href="/package">
                   <MapPin className="w-10 h-10" />
-                  {/* Packages */}
+                </Link>
                 </TabsTrigger>
-                <TabsTrigger value="bus" className="flex items-center gap-2">
-                  <Bus className="w-10 h-10" />
+                
                   {/* Bus */}
+                <TabsTrigger value="bus" className="flex items-center gap-2">
+                <Link href="/bus">
+                  <Bus className="w-10 h-10" />
+                </Link>
                 </TabsTrigger>
-                <TabsTrigger value="cabs" className="flex items-center gap-2">
-                  <Car className="w-10 h-10" />
+
                   {/* Cabs */}
+                <TabsTrigger value="cabs" className="flex items-center gap-2">
+                <Link href="/cab">
+                  <Car className="w-10 h-10" />
+                </Link>
                 </TabsTrigger>
+
               </TabsList>
 
               <TabsContent value="flights">
@@ -125,17 +142,7 @@ export default function HeroSection() {
                       />
                       Round Trip
                     </Label>
-                    {/* <Label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="tripType"
-                        value="multicity"
-                        checked={tripType === "multicity"}
-                        onChange={(e) => setTripType(e.target.value)}
-                        className="text-blue-600"
-                      />
-                      Multi City
-                    </Label> */}
+              
                   </div>
 
                   {/* Flight Search Form */}

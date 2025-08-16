@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
@@ -56,7 +55,13 @@ export default function ContactUsPage() {
                     {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4"> */}
                     <div className="space-y-2">
                       <Label htmlFor="name"> Name</Label>
-                      <Input id="name" placeholder="Name" />
+                      <input
+                      id="name"
+                      type="text"
+                      placeholder="Enter your Name"
+                      className="w-full h-12 px-4 border border-gray-300 bg-white rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                      required
+                    />
                       {/* </div> */}
                       {/* <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name</Label>
@@ -66,25 +71,32 @@ export default function ContactUsPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" placeholder="Email" />
+                       <input
+                      id="email"
+                      type="text"
+                      placeholder="Enter your Email"
+                      className="w-full h-12 px-4 border border-gray-300 bg-white rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                      required
+                    />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number</Label>
-                      <Input id="phone" type="tel" placeholder="Phone" />
+                       <input
+                      id="phone"
+                      type="tel"
+                      placeholder="Enter your mobile number"
+                      className="w-full h-12 px-4 border border-gray-300 bg-white rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                      required
+                    />
                     </div>
-
-                    {/* <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
-                    <Input id="subject" placeholder="How can we help you?" />
-                  </div> */}
 
                     <div className="space-y-2">
                       <Label htmlFor="message">Message</Label>
                       <Textarea
                         id="message"
                         placeholder="Tell us more about your inquiry..."
-                        className="min-h-[120px]"
+                        className="min-h-[120px] w-full h-12 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                       />
                     </div>
 

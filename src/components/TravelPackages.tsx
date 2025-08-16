@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -11,6 +12,7 @@ const offers = [
     code: "DOMESTIC25",
     image: "/images/domestic.jpg",
     validTill: "Valid till 31st Dec",
+    href:"/flight",
   },
   {
     title: "International Hotel Deals",
@@ -18,6 +20,7 @@ const offers = [
     code: "HOTEL15",
     image: "/images/domes-hotel.jpg",
     validTill: "Valid till 15th Jan",
+    href:"/hotel",
   },
   {
     title: "Holiday Package Special",
@@ -25,6 +28,7 @@ const offers = [
     code: "HOLIDAY15",
     image: "/images/Explore.png",
     validTill: "Valid till 28th Dec",
+    href:"/package",
   },
 ]
 
@@ -60,7 +64,9 @@ export default function TravelPackages() {
                     </div>
                     <span className="text-sm text-gray-500">{offer.validTill}</span>
                   </div>
+                  <Link href={offer.href} className="w-full">
                   <Button className="w-full bg-orange-500 hover:bg-orange-600">Book Now</Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
