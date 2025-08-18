@@ -97,9 +97,9 @@ export default function BusPage() {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover z-[-1]"
       >
-        <source src="/images/video/cab.MP4" type="video/MP4" />
+        <source src="/images/video/buss.MP4" type="video/MP4" />
         Your browser does not support the video tag.
       </video>
       {/* <div className="absolute inset-0 bg-black opacity-20"></div> */}

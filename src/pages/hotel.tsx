@@ -46,7 +46,7 @@ export default function HotelsPage() {
 
      <section
       className="relative  bg-center py-16"
-      style={{ backgroundImage: "url('/images/video/v1.mp4')" }}
+      style={{ backgroundImage: "url('/img/bg/map.png')" }}
     >
       {/* Background Video */}
       <video
@@ -54,9 +54,9 @@ export default function HotelsPage() {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-fill z-[-1]"
       >
-        <source src="/images/video/v2.mp4" type="video/mp4" />
+        <source src="/images/video/hotel.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       {/* <div className="absolute inset-0 bg-black opacity-20"></div> */}

@@ -99,8 +99,9 @@ const flights = [
     <>
       <Header />
     <section
-      className="relative  bg-center py-16"
-      style={{ backgroundImage: "url('/images/video/v1.mp4')" }}
+      className="relative  bg-center py-16 "
+      // style={{ backgroundImage: "url('/images/video/v1.mp4')" }}
+      style={{ backgroundImage: "url('/img/bg/map.png')" }}
     >
       {/* Background Video */}
       <video
@@ -108,9 +109,9 @@ const flights = [
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover z-[-1]"
       >
-        <source src="/images/video/v2.mp4" type="video/mp4" />
+        <source src="/images/video/flight.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       {/* <div className="absolute inset-0 bg-black opacity-20"></div> */}
@@ -328,8 +329,9 @@ const flights = [
            </div> 
       </section>
 
-        <section className="py-10 px-4">
-      <div className="max-w-6xl mx-auto bg-white shadow-md rounded-2xl p-6">
+      
+        <section className="py-10 px-4" style={{ backgroundImage: "url('/img/bg/map.png')" }} >
+      <div className="max-w-6xl mx-auto  shadow-md rounded-2xl p-6">
         {/* Heading */}
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">
           Experience Flying with our Airline Partners
@@ -358,10 +360,9 @@ const flights = [
           ))}
         </div>
       </div>
-    </section>
 
      <section className="py-10 px-4">
-      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-md p-6">
+      <div className="max-w-6xl mx-auto  rounded-2xl shadow-md p-6" >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {flights.map((flight) => (
             <div key={flight.city} className="flex items-center space-x-4">
@@ -386,7 +387,12 @@ const flights = [
       </div>
     </section>
 
+    </section>
+
+
+
       <Footer />
+
       </>
         )
 }

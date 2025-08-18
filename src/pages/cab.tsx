@@ -46,7 +46,7 @@ export default function CabsPage() {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-fill z-[-1]"
       >
         <source src="/images/video/cab.MP4" type="video/MP4" />
         <div className="absolute inset-0 bg-black/100 bg-opacity-10 group-hover:bg-opacity-100 transition-all duration-300"></div>

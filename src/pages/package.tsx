@@ -46,9 +46,9 @@ export default function PackagesPage() {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-fill z-[-1]"
       >
-        <source src="/images/video/cab.MP4" type="video/MP4" />
+        <source src="/images/video/pkg.MP4" type="video/MP4" />
         Your browser does not support the video tag.
       </video>
       {/* <div className="absolute inset-0 bg-black opacity-20"></div> */}

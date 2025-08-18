@@ -45,14 +45,14 @@ export default function HeroSection() {
     <section
       className="relative  bg-center py-16"
       style={{ backgroundImage: "url('/images/video/v1.mp4')" }}
-    >
+    > 
       {/* Background Video */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover "
       >
         <source src="/images/video/v2.mp4" type="video/mp4" />
         Your browser does not support the video tag.
