@@ -46,7 +46,7 @@ export default function Header() {
               About Us
             </Link>
             <Link
-              href="#"
+              href="/holiday"
                className={`text-gray-700 hover:text-orange-500 font-medium ${
                 router.pathname === "" ? "text-orange-500" : "text-slate-900 hover:text-white hover:bg-orange-500 rounded-full px-2 py-1"
               }`}
