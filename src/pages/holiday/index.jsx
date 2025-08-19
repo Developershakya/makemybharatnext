@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 import { AiOutlinePicture, AiOutlineRight } from "react-icons/ai"; // Ant Design icons
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 import Header from "@/components/Header"; // Assuming you have a Header component
+import { useRouter } from "next/router";
+import Link from "next/link";
 export default function HolidayPage() {
   const [isLarge, setIsLarge] = useState(false);
-
+  const [selectedTab, setSelectedTab] = useState("Itinerary");
+  const router = useRouter();
   useEffect(() => {
     const handleResize = () => setIsLarge(window.innerWidth >= 640); // lg breakpoint = 1024px
     handleResize(); // initial check
@@ -14,7 +17,14 @@ export default function HolidayPage() {
   }, []);
   return (
     <>
-      <Header />
+      {" "}
+      {isLarge ? (
+        <Header />
+      ) : (
+        <button onClick={() => router.back()} className="flex items-center p-3">
+          <FiArrowLeft className="text-gray-500 text-2xl" />
+        </button>
+      )}
       <div className="relative">
         <div
           className="h-[300px] w-full relative flex justify-center items-center bg-black"
@@ -52,13 +62,32 @@ export default function HolidayPage() {
 
           {/* Trip Info */}
           <div className="flex items-center gap-3 text-sm text-gray-600">
-            <span className="bg-[#26B5A9] text-white px-2 py-1 rounded-sm text-xs font-medium">
+            <span className="border  sm:bg-[#26B5A9] sm:text-white px-2 py-1 rounded-sm text-xs font-medium">
               3N/4D
             </span>
-            <span className="bg-black capitalize text-white px-2 py-1 rounded-sm text-xs font-medium">
+            <span className="border sm:bg-black capitalize sm:text-white px-2 py-1 rounded-sm text-xs font-medium">
               package
             </span>
+            <span className="border sm:bg-black capitalize sm:text-white px-2 py-1 rounded-sm text-xs font-medium">
+              Customizable
+            </span>
             <span className="text-[#4A4A4A] font-bold">3N Goa</span>
+          </div>
+          <div className="flex items-center gap-3 ml-4 text-sm text-gray-600">
+            <ul className="flex gap-6">
+              <li className="relative   px-2 py-1 rounded-sm text-xs font-medium">
+                <span className="absolute left-[-8px] top-1/2 -translate-y-1/2 w-2 h-2 bg-gray-600 rounded-full flex items-center"></span>
+                2D Delhi
+              </li>
+              <li className="relative  px-2 py-1 rounded-sm text-xs font-medium">
+                <span className="absolute left-[-8px] top-1/2 -translate-y-1/2 w-2 h-2 bg-gray-600 rounded-full flex items-center"></span>
+                1D Lucknow
+              </li>
+              <li className="relative   px-2 py-1 rounded-sm text-xs font-medium ">
+                <span className="absolute left-[-8px] top-1/2 -translate-y-1/2 w-2 h-2 bg-gray-600 rounded-full flex items-center"></span>
+                1D City
+              </li>
+            </ul>
           </div>
 
           {/* Images */}
@@ -214,7 +243,7 @@ export default function HolidayPage() {
                 <p className="text-4xl font-bold text-green-600">
                   ₹8,550 <span className="text-base">/ Adult</span>
                 </p>
-                <button className="w-full mt-4 bg-gradient-to-r from-blue-600 to-teal-500 text-white py-3 rounded-lg font-semibold hover:opacity-90">
+                <button className="w-full mt-4 bg-gradient-to-r from-orange-400 to-pink-500 text-white py-3 rounded-lg font-semibold hover:opacity-90">
                   Proceed to Payment
                 </button>
               </div>
@@ -237,7 +266,7 @@ export default function HolidayPage() {
             </aside>
           </div>
         </div>
-        <div className="bg-black fixed items-center  w-full flex justify-between bottom-0 left-0 shadow p-4  md:hidden ">
+        <div className="bg-black fixed items-center  w-full  justify-between bottom-0 left-0 shadow p-4 lg:hidden md:hidden flex">
           <div className="flex flex-col">
             <p className="text-sm line-through text-gray-300">₹12,295</p>
             <p className="text-3xl font-bold text-white">₹8,550</p>
