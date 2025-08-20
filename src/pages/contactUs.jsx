@@ -182,16 +182,16 @@ export default function ContactUsPage() {
                     </p>
                     <div className="space-y-2">
                       <Button className="w-full justify-start ">
-                        <a href="tel:+91 9871980066">
+                        <Link href="tel:+91 9871980066">
                           <Phone className="w-4 h-4 mr-2" />
                           Call Now
-                        </a>
+                        </Link>
                       </Button>
                       <Button className="w-full items-center">
-                        <a href="mailto:support@makemybharatyatra.com">
+                        <Link href="mailto:support@makemybharatyatra.com">
                           <Mail className="w-4 h-4 mr-2  " />
                           Send Email
-                        </a>
+                        </Link>
                       </Button>
                     </div>
                   </CardContent>
