@@ -1,14 +1,42 @@
 "use client";
 import { useState, useEffect } from "react";
+import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import { AiOutlinePicture, AiOutlineRight } from "react-icons/ai"; // Ant Design icons
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
+import { FaShareAlt } from "react-icons/fa";   // Font Awesome
+import { IoShareSocial } from "react-icons/io5"; // Ionicons
+import { MdShare } from "react-icons/md";      // Material Icons
+import { RiShareForwardFill } from "react-icons/ri"; // Remix Icons
 import Header from "@/components/Header"; // Assuming you have a Header component
 import { useRouter } from "next/router";
 import Link from "next/link";
+import SearchBar from "../../components/SearchBar";
 export default function HolidayPage() {
   const [isLarge, setIsLarge] = useState(false);
-  const [selectedTab, setSelectedTab] = useState("Itinerary");
+  const [selectedTab, setSelectedTab] = useState("itinerary");
+  const [open ,setOpen]= useState(false);
   const router = useRouter();
+
+
+    const handleShare = async () => {
+    const shareUrl = `${window.location.origin}${router.asPath}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Check this out!",
+          text: "Mujhe laga tumhe pasand aayega 👇",
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.error("Error sharing:", err);
+      }
+    } else {
+      // Fallback if navigator.share is not supported
+      navigator.clipboard.writeText(shareUrl);
+      alert("Link copied: " + shareUrl);
+    }
+  };
   useEffect(() => {
     const handleResize = () => setIsLarge(window.innerWidth >= 640); // lg breakpoint = 1024px
     handleResize(); // initial check
@@ -25,6 +53,12 @@ export default function HolidayPage() {
           <FiArrowLeft className="text-gray-500 text-2xl" />
         </button>
       )}
+
+
+      {/* search engine */}
+      {isLarge && <SearchBar/>}
+
+
       <div className="relative">
         <div
           className="h-[300px] w-full relative flex justify-center items-center bg-black"
@@ -54,7 +88,7 @@ export default function HolidayPage() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-5 space-y-4">
+        <div className="max-w-7xl mx-auto  p-5 space-y-4">
           {/* Title */}
           <h1 className="capitalize text-2xl md:text-3xl  font-bold md:font-bold text-gray-900">
             Goa hero package with complimentary activities
@@ -91,9 +125,9 @@ export default function HolidayPage() {
           </div>
 
           {/* Images */}
-          <div className="grid grid-cols-1 md:grid-cols-2  gap-3 h-[250px] rounded-xl">
+          <div className="grid grid-cols-1 md:grid-cols-2  gap-3 h-[250px] rounded-xl ">
             {/* Left Big Image */}
-            <div className="relative rounded-xl overflow-hidden">
+            <div className="relative rounded-xl overflow-hidden cursor-pointer">
               <img
                 className="absolute inset-0 w-full h-full object-cover"
                 src="https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg"
@@ -109,28 +143,28 @@ export default function HolidayPage() {
             {/* Right Grid */}
             <div className="grid grid-cols-2  gap-3">
               {/* Top Right Image */}
-              <div className="relative rounded-xl overflow-hidden">
+              <div className="relative rounded-xl overflow-hidden cursor-pointer">
                 <img
                   className="absolute inset-0 w-full h-full object-cover"
                   src="https://images.pexels.com/photos/206648/pexels-photo-206648.jpeg"
                   alt=""
                 />
               </div>
-
+   
               {/* Bottom Two Small Images */}
               <div
                 className={`grid  gap-3 ${
                   isLarge ? "grid-rows-2" : "grid-cols-2"
                 }`}
               >
-                <div className="relative rounded-xl overflow-hidden">
+                <div className="relative rounded-xl overflow-hidden cursor-pointer">
                   <img
                     className="absolute inset-0 w-full h-full object-cover"
                     src="https://images.pexels.com/photos/709552/pexels-photo-709552.jpeg"
                     alt=""
                   />
                 </div>
-                <div className="relative rounded-xl overflow-hidden">
+                <div className="relative rounded-xl overflow-hidden cursor-pointer">
                   <img
                     className="absolute inset-0 w-full h-full object-cover"
                     src="https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg"
@@ -140,28 +174,40 @@ export default function HolidayPage() {
               </div>
             </div>
           </div>
+                {!isLarge && <SearchBar/>}
         </div>
         <div className="px-4 py-6">
           {/* Tabs */}
-          <div className="max-w-7xl mx-auto flex space-x-8 bg-white p-4 shadow-md rounded-t-lg -mt-2">
-            <a
-              href="#"
-              className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1"
+          <div className="max-w-7xl mx-auto flex justify-between  bg-white p-4 shadow-md rounded-t-lg -mt-2">
+         <div className="w-full flex space-x-8" >
+             <button
+              onClick={()=>(setSelectedTab("itinerary"))}
+              className={`font-semibold md:text-2xl cursor-pointer hover:text-blue-600 transition-all pb-1 ${selectedTab === "itinerary" ? "text-blue-600 border-blue-600 border-b-4" : "text-gray-600"}`}
             >
               Itinerary
-            </a>
-            <a href="#" className="text-gray-600 hover:text-blue-600">
+            </button>
+            <button
+               onClick={()=>(setSelectedTab("policies"))}
+ className={`font-semibold md:text-2xl cursor-pointer hover:text-blue-600 pb-1 transition-all ${selectedTab == "policies" ? "text-blue-600 border-blue-600 border-b-4" : "text-gray-600"}`}>
               Policies
-            </a>
-            <a href="#" className="text-gray-600 hover:text-blue-600">
+            </button>
+            <button    onClick={()=>(setSelectedTab("summary"))}
+ className={`font-semibold md:text-2xl cursor-pointer hover:text-blue-600 pb-1 transition-all  ${selectedTab == "summary" ? "text-blue-600 border-blue-600 border-b-4" : "text-gray-600"}`}>
               Summary
-            </a>
+            </button>
+         </div>
+ 
+        <button onClick={handleShare} className="flex items-center cursor-pointer gap-2 text-gray-600   px-4 py-2 ">
+          <RiShareForwardFill  size={20} />       Share
+         </button>
           </div>
 
           {/* Main Content */}
           <div className="max-w-7xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1  gap-6">
             {/* Itinerary Section (left) */}
+ 
             <div className="col-span-2  bg-white rounded-lg shadow p-8">
+              <div className=""><span>Itinerary</span> </div>
               <h2 className="text-2xl font-semibold mb-6">4 Day Plan</h2>
 
               {/* Day 1 */}
