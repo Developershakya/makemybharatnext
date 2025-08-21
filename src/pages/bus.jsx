@@ -53,6 +53,7 @@ import {
   MapPin,
   Calendar,
 } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -65,6 +66,50 @@ import Footer from "@/components/Footer";
 
 
 export default function BusPage() {
+
+  const buses = [
+  {
+    city: "Buses From Chennai To",
+    routes: "Bangalore, Coimbatore, Madurai, Hyderabad, Trichy",
+    image: "/flights/Coimbatore.png",
+  },
+
+  {
+    city: "Buses From Mumbai To",
+    routes: "Bangalore, Goa, Pune, Indore, Ahmedabad",
+    image: "/flights/marine drive.jpeg",
+  },
+  {
+    city: "Buses From Hyderabad To",
+    routes: "Bangalore, Chennai, Mumbai, Pune, Vijayawada",
+    image: "/flights/hyderabad.jpeg",
+  },
+  {
+    city: "Buses From Delhi To",
+    routes: "Lucknow, Dehradun, Manali, Kanpur, Jaipur",
+    image: "/flights/delhi.jpg",
+  },
+  {
+    city: "Buses From Pune To",
+    routes: "Goa, Bangalore, Nagpur, Hyderabad, Mumbai",
+    image: "/flights/pune.jpeg",
+  },
+  {
+    city: "Buses From Kolkata To",
+    routes: "Durgapur, Asansol, Siliguri, Bhubaneshwar, Bardhaman",
+    image: "/flights/kolkata.jpeg",
+  },
+  {
+    city: "Buses From Bangalore To",
+    routes: "Chennai, Hyderabad, Coimbatore, Mumbai, Goa",
+    image: "/flights/bangalore.jpeg",
+  },
+  {
+    city: "Buses From Ahmedabad To",
+    routes: "Mumbai, Rajkot, Surat, Pune, Indore",
+    image: "/flights/ahmedabad.jpeg",
+  },
+];
   
   return (
     <>
@@ -98,48 +143,57 @@ export default function BusPage() {
         <Card>
           <CardContent>
             <Tabs defaultValue="bus" className="w-full">
-             <TabsList className="grid w-full grid-cols-5  mb-6 bg- ">
+             <TabsList className="flex justify-around w-full grid-cols-5  mb-6 bg- ">
                 
                   {/* Flights */}
+                <Link href="/flight">
+
                 <TabsTrigger
                   value="flights"
                   className="flex items-center gap-2"
                 >
-                <Link href="/flight">
                   <Plane className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
                 
                  {/* Hotels */}
-                <TabsTrigger value="hotels" className="flex items-center gap-2">
                 <Link href="/hotel">
+
+                <TabsTrigger value="hotels" className="flex items-center gap-2">
                   <Hotel className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
 
                   {/* Packages */}
+                <Link href="/package">
+
                 <TabsTrigger
                   value="packages"
                   className="flex items-center gap-2"
                 >
-                <Link href="/package">
                   <MapPin className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
                 
                   {/* Bus */}
-                <TabsTrigger value="bus" className="flex items-center gap-2">
                 <Link href="/bus">
+                <TabsTrigger value="bus" className="flex items-center gap-2">
                   <Bus className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
 
                   {/* Cabs */}
-                <TabsTrigger value="cabs" className="flex items-center gap-2">
                 <Link href="/cab">
+
+                <TabsTrigger value="cabs" className="flex items-center gap-2">
                   <Car className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
 
               </TabsList>
     
@@ -211,6 +265,33 @@ export default function BusPage() {
            </Card>
            </div> 
       </section>
+
+  <section className="py-10 px-4">
+      <div className="max-w-7xl mx-auto  rounded-2xl shadow-md p-6" >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {buses.map((bus) => (
+            <div key={bus.city} className="flex items-center space-x-4">
+              {/* Circular Image */}
+              <div className="w-14 h-14 rounded-full overflow-hidden">
+                <Image
+                  src={bus.image}
+                  alt={bus.city}
+                  width={56}
+                  height={56}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              {/* City + Routes */}
+              <div>
+                <h3 className="font-semibold text-lg">{bus.city}</h3>
+                <p className="text-sm text-slate-900">{bus.routes}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
       <Footer />
       </>
   );

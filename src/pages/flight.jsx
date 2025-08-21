@@ -128,48 +128,55 @@ const flights = [
         <Card>
           <CardContent>
             <Tabs defaultValue="flights" className="w-full">
-              <TabsList className="grid w-full grid-cols-5  mb-6 bg- ">
+              <TabsList className="flex justify-around w-full grid-cols-5  mb-6 bg- ">
                 
                   {/* Flights */}
+                <Link href="/flight">
                 <TabsTrigger
                   value="flights"
-                  className="flex items-center gap-2"
-                >
-                <Link href="/flight">
+                  className="flex items-center gap-2">
                   <Plane className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
                 
                  {/* Hotels */}
-                <TabsTrigger value="hotels" className="flex items-center gap-2">
                 <Link href="/hotel">
+
+                <TabsTrigger value="hotels"className="flex items-center gap-2">
                   <Hotel className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
 
                   {/* Packages */}
+                <Link href="/package">
+
                 <TabsTrigger
                   value="packages"
                   className="flex items-center gap-2"
                 >
-                <Link href="/package">
                   <MapPin className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
                 
                   {/* Bus */}
-                <TabsTrigger value="bus" className="flex items-center gap-2">
                 <Link href="/bus">
+
+                <TabsTrigger value="bus" className="flex items-center gap-2">
                   <Bus className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
 
                   {/* Cabs */}
-                <TabsTrigger value="cabs" className="flex items-center gap-2">
                 <Link href="/cab">
+
+                <TabsTrigger value="cabs" className="flex items-center gap-2">
                   <Car className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
 
               </TabsList>
 
