@@ -9,6 +9,7 @@ import {
   MapPin,
   Calendar,
 } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,21 +19,39 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 
-
-
 export default function PackagesPage() {
-  
-  // const [tripType, setTripType] = useState("roundtrip");
-  // const [adults, setAdults] = useState(1);
-  // const [children, setChildren] = useState(0);
-  // const [infants, setInfants] = useState(0);
-  // const [travelClass, setTravelClass] = useState("");
-
-  // const displayValue = `${adults} Adult${adults > 1 ? "s" : ""}${
-  //   children > 0 ? `, ${children} Child${children > 1 ? "ren" : ""}` : ""
-  // }${infants > 0 ? `, ${infants} Infant${infants > 1 ? "s" : ""}` : ""}`;
  
+  const packages = [
+  {
+    city: "Ladakh",
+    routes: "Ladakh Tour Packages , Ladakh Tourism, Ladakh Honeymoon Packages",
+    image: "/hotels/manali.jpg",
+  },
 
+  {
+    city: "Kerala",
+    routes: "Kerala Tour Packages , Kerala Tourism, Kerala Honeymoon Packages",
+    image: "/flights/marine drive.jpeg",
+  },
+   {
+      city: "Manali",
+      routes: "Manali Tour Packages , Manali Tourism, Manali Honeymoon Packages",
+      image: "/hotels/manali.jpg",
+    },
+   {
+      city: "Goa",
+      routes: "Goa Tour Packages , Goa Tourism, Goa Honeymoon Packages",
+      image: "/flights/Goa.jpg",
+    },
+  {
+    city: "Delhi ",
+    routes: "Delhi Tour Packages , Delhi Tourism, Delhi Honeymoon Packages",
+    image: "/flights/delhi.jpg",
+  },
+  
+
+];
+  
   return (
     <>
     <Header />
@@ -65,48 +84,58 @@ export default function PackagesPage() {
         <Card>
           <CardContent>
             <Tabs defaultValue="packages" className="w-full">
-             <TabsList className="grid w-full grid-cols-5  mb-6 bg- ">
+             <TabsList className="flex justify-around w-full grid-cols-5  mb-6 bg- ">
                 
                   {/* Flights */}
+                <Link href="/flight">
+
                 <TabsTrigger
                   value="flights"
                   className="flex items-center gap-2"
                 >
-                <Link href="/flight">
                   <Plane className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
                 
                  {/* Hotels */}
-                <TabsTrigger value="hotels" className="flex items-center gap-2">
                 <Link href="/hotel">
+
+                <TabsTrigger value="hotels" className="flex items-center gap-2">
                   <Hotel className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
 
                   {/* Packages */}
+                <Link href="/package">
+
                 <TabsTrigger
                   value="packages"
                   className="flex items-center gap-2"
                 >
-                <Link href="/package">
                   <MapPin className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
                 
                   {/* Bus */}
-                <TabsTrigger value="bus" className="flex items-center gap-2">
                 <Link href="/bus">
+
+                <TabsTrigger value="bus" className="flex items-center gap-2">
                   <Bus className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
 
                   {/* Cabs */}
-                <TabsTrigger value="cabs" className="flex items-center gap-2">
                 <Link href="/cab">
+
+                <TabsTrigger value="cabs" className="flex items-center gap-2">
                   <Car className="w-10 h-10" />
-                </Link>
                 </TabsTrigger>
+                </Link>
+
 
               </TabsList>
     
@@ -160,6 +189,33 @@ export default function PackagesPage() {
            </Card>
            </div> 
       </section>
+
+<section className="py-10 px-4">
+      <div className="max-w-7xl mx-auto  rounded-2xl shadow-md p-6" >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {packages.map((pkg) => (
+            <div key={pkg.city} className="flex items-center space-x-4">
+              {/* Circular Image */}
+              <div className="w-14 h-14 rounded-full overflow-hidden">
+                <Image
+                  src={pkg.image}
+                  alt={pkg.city}
+                  width={56}
+                  height={56}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              {/* City + Routes */}
+              <div>
+                <h3 className="font-semibold text-lg">{pkg.city}</h3>
+                <p className="text-sm text-slate-900">{pkg.routes}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
       <Footer />
       </>
   );
