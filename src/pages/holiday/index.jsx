@@ -32,7 +32,7 @@ export default function HolidayPage() {
     {
       category: "Property Photos",
       cover:
-        "https://images.pexels.com/photos/223123/pexels-photo-223123.jpeg",
+        "https://makemybharatyatra.com/assets/images/manali-view-img3.cms",
       photos: [
         "https://images.pexels.com/photos/223123/pexels-photo-223123.jpeg",
         "https://images.pexels.com/photos/223124/pexels-photo-223124.jpeg",
@@ -49,7 +49,7 @@ export default function HolidayPage() {
     {
       category: "Package Highlights",
       cover:
-        "https://images.pexels.com/photos/423123/pexels-photo-423123.jpeg",
+        "https://makemybharatyatra.com/assets/images/manali-attraction4-img.webp",
       photos: [
         "https://images.pexels.com/photos/423123/pexels-photo-423123.jpeg",
       ],

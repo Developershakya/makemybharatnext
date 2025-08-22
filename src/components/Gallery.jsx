@@ -20,7 +20,7 @@ export default function Gallery({ images, onClose }) {
       </div>
 
       {/* Category Slider */}
-      <div className="w-full max-w-7xl mb-4 overflow-x-auto flex gap-4">
+      <div className="w-full max-w-7xl p-6 mb-4 overflow-x-auto  flex gap-4">
         {images.map((img) => (
           <div
             key={img.category}
@@ -31,7 +31,7 @@ export default function Gallery({ images, onClose }) {
             }`}
             onClick={() => setSelectedCategory(img.category)}
           >
-            <div className=" text-gray-800 font-semibold   bg-opacity-50 flex items-center ">
+            <div className=" text-gray-800 font-semibold bg-white  bg-opacity-50 flex items-center max-w-3xl ">
               <p className="px-2 text-sm flex py-1 flex-col ">
                
                 {img.category}
@@ -52,7 +52,7 @@ export default function Gallery({ images, onClose }) {
       </div>
 
       {/* Images Grid */}
-      <div className="w-full max-w-7xl grid gap-4 mb-4 md:grid-cols-3">
+      <div className="w-full p-6 md:max-w-7xl md:grid gap-4 mb-4 items-center border-gray-400 border-t-1 flex flex-col  md:grid-cols-3">
         {currentImages.map((photo, index) => (
           <div
             key={index}
@@ -62,7 +62,7 @@ export default function Gallery({ images, onClose }) {
             <img
               src={photo}
               alt={`Gallery ${index}`}
-              className="w-full h-48 object-cover rounded-lg"
+              className="md:w-full h-100 w-90 md:h-40  object-cover"
             />
           </div>
         ))}
@@ -80,7 +80,7 @@ export default function Gallery({ images, onClose }) {
           <img
             src={fullImage}
             alt="Full"
-            className="max-h-full w-auto max-w-full object-contain rounded-lg"
+            className="max-h-full w-auto max-w-full object-contain "
           />
         </div>
       )}
