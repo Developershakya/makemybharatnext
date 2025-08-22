@@ -52,6 +52,7 @@ import {
   Bus,
   MapPin,
   Calendar,
+  Clock,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -61,11 +62,45 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useState } from "react";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 
 
 
 
 export default function BusPage() {
+    const [selected, setSelected] = useState(new Date());
+      const [open, setOpen] = useState(false); // ✅ state for calendar visibility
+      const [from, setFrom] = useState("");
+    const [to, setTo] = useState("");
+  
+
+
+      const indianCities = [
+    "Delhi",
+    "Mumbai",
+    "Bengaluru",
+    "Chennai",
+    "Kolkata",
+    "Hyderabad",
+    "Pune",
+    "Jaipur",
+    "Ahmedabad",
+    "Lucknow",
+    "Chandigarh",
+    "Goa",
+    "Agra",
+    "Varanasi",
+    "Patna",
+    "Bhopal",
+    "Indore",
+    "Nagpur",
+    "Surat",
+    "Amritsar",
+  ];
+
 
   const buses = [
   {
@@ -110,6 +145,8 @@ export default function BusPage() {
     image: "/flights/ahmedabad.jpeg",
   },
 ];
+
+
   
   return (
     <>
@@ -199,7 +236,153 @@ export default function BusPage() {
     
 
      <TabsContent value="bus">
-                <div className="space-y-6">
+            <div className="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-3">
+                <div className="text-lg ml-auto   text-black font-bold ">
+          Online Bus Booking
+        </div>
+
+      {/* Booking Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+        {/* Pickup Location */}
+      <div>
+        <label className="text-xs uppercase font-medium text-slate-500">
+          From
+        </label>
+        <select
+          value={from}
+          onChange={(e) => setFrom(e.target.value)}
+          className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+        >
+
+          <option value="">Select Pickup Location</option>
+          {indianCities.map((city, index) => (
+            <option key={index} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Drop Location */}
+      <div>
+        <label className="text-xs uppercase font-medium text-slate-500">
+          To
+        </label>
+        
+        <select
+          value={to}
+          onChange={(e) => setTo(e.target.value)}
+          className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+        >
+          <option value="" className=" flex items-center justify-center ">Select Drop Location</option>
+          {indianCities.map((city, index) => (
+            <option key={index} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+      </div>
+
+        {/* Departure Date */}
+  <div className="relative">
+    
+      <label className="text-xs uppercase font-medium text-slate-500">
+        Departure 
+      </label>
+      
+
+      {/* Date Display (click to toggle calendar) */}
+      <div
+      
+        className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
+        onClick={() => setOpen(!open)}
+      >
+          
+        <CalendarIcon className="w-5 h-5 text-orange-500 " />
+        <span>
+          {selected
+            ? selected.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })
+            : "Pick a date"}
+        
+     
+        </span>
+  {/* Show weekday */}
+       {selected && (
+        <p className="text-xs text-orange-500 ">
+          {selected.toLocaleDateString("en-US", { weekday: "long" })}
+        </p>
+      )}
+      </div>
+
+      {/* Calendar Dropdown */}
+      {open && (
+        <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
+          <DayPicker
+            mode="single"
+            selected={selected}
+            onSelect={(date) => {
+              setSelected(date);
+              setOpen(false); // ✅ close after selecting date
+            }}
+          />
+        </div>
+      )}
+    </div>
+
+        {/* Pickup Time */}
+       
+       {/* Search Button */}
+<div className="flex justify-center  mt-6">
+          <Button className="w-full md:w-auto px-6 py-3 rounded-sm bg-gray-400 hover:bg-gray-500 text-white font-semibold transition-colors duration-300">
+            SEARCH BUSES
+          </Button>
+        </div>
+       
+      </div>
+        
+    </div>
+                
+              </TabsContent>
+
+              </Tabs>
+              </CardContent>
+           </Card>
+           </div> 
+      </section>
+
+  <section className="py-10 px-4">
+      <div className="max-w-7xl mx-auto  rounded-2xl shadow-md p-6" >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {buses.map((bus) => (
+            <div key={bus.city} className="flex items-center space-x-4">
+              {/* Circular Image */}
+              <div className="w-14 h-14 rounded-full overflow-hidden">
+                <Image
+                  src={bus.image}
+                  alt={bus.city}
+                  width={56}
+                  height={56}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              {/* City + Routes */}
+              <div>
+                <h3 className="font-semibold text-lg">{bus.city}</h3>
+                <p className="text-sm text-slate-900">{bus.routes}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+
+    <section>
+      <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white">
                     {/* From Location */}
                     <div className="space-y-2 bg-orange-500  rounded-md">
@@ -258,38 +441,6 @@ export default function BusPage() {
                     </Button>
                   </div>
                 </div>
-              </TabsContent>
-
-              </Tabs>
-              </CardContent>
-           </Card>
-           </div> 
-      </section>
-
-  <section className="py-10 px-4">
-      <div className="max-w-7xl mx-auto  rounded-2xl shadow-md p-6" >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {buses.map((bus) => (
-            <div key={bus.city} className="flex items-center space-x-4">
-              {/* Circular Image */}
-              <div className="w-14 h-14 rounded-full overflow-hidden">
-                <Image
-                  src={bus.image}
-                  alt={bus.city}
-                  width={56}
-                  height={56}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              {/* City + Routes */}
-              <div>
-                <h3 className="font-semibold text-lg">{bus.city}</h3>
-                <p className="text-sm text-slate-900">{bus.routes}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </section>
 
       <Footer />

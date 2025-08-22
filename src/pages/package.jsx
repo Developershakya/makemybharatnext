@@ -1,25 +1,59 @@
 "use client";
-// import { useState } from "react";
 import  Link  from "next/link";
+import Image from "next/image";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useState } from "react";
+// import { Calendar as CalendarIcon } from "lucide-react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 import {
   Plane,
   Hotel,
   Car,
   Bus,
   MapPin,
-  Calendar,
+  Calendar as CalendarIcon,
 } from "lucide-react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
 
 export default function PackagesPage() {
+   const [selected, setSelected] = useState(new Date());
+        const [open, setOpen] = useState(false); // ✅ state for calendar visibility
+        const [from, setFrom] = useState("");
+      const [to, setTo] = useState("");
+
+       const [fromCity, setFromCity] = useState("New Delhi");
+  const [toCity, setToCity] = useState("Mathura");
+  const [date, setDate] = useState("2025-08-24");
+  const [adults, setAdults] = useState(2);
+
+
+           const indianCities = [
+    "Delhi",
+    "Mumbai",
+    "Bengaluru",
+    "Chennai",
+    "Kolkata",
+    "Hyderabad",
+    "Pune",
+    "Jaipur",
+    "Ahmedabad",
+    "Lucknow",
+    "Chandigarh",
+    "Goa",
+    "Agra",
+    "Varanasi",
+    "Patna",
+    "Bhopal",
+    "Indore",
+    "Nagpur",
+    "Surat",
+    "Amritsar",
+  ];
+
  
   const packages = [
   {
@@ -141,47 +175,188 @@ export default function PackagesPage() {
     
 
      <TabsContent value="packages">
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-white">
-                    <div className="space-y-2 bg-orange-500  rounded-md">
-                      <Label htmlFor="from-city">From</Label>
-                      <div className="relative">
-                        <Input
-                          id="from-city"
-                          placeholder="Delhi"
-                          className="pl-10"
-                        />
-                        <MapPin className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                      </div>
-                    </div>
+        <div className="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-3">
+                      {/* Trip Type Tabs */}
+      <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-black mb-6">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            name="tripType"
+          />
+          Outstation One-Way
+        </label>
 
-                    <div className="space-y-2 bg-orange-500  rounded-md">
-                      <Label htmlFor="to-destination">To</Label>
-                      <div className="relative">
-                        <Input
-                          id="to-destination"
-                          placeholder="Goa"
-                          className="pl-10"
-                        />
-                        <MapPin className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                      </div>
-                    </div>
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            name="tripType"
+            value="round"
+          />
+          Honeymoon
+        </label>
 
-                    <div className="space-y-2 bg-orange-500  rounded-md">
-                      <Label htmlFor="travel-date">Travel Date</Label>
-                      <div className="relative">
-                        <Input id="travel-date" type="date" className="pl-10 text-orange-400 justify-center" />
-                        <Calendar className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                      </div>
-                    </div>
-                  </div>
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            name="tripType"
+            value="airport"
+          />
+          <span className="">Book@1</span>
+        </label>
 
-                  <div className=" flex justify-center  items-center">
-                    <Button className="w-full justify-center md:w-auto bg-orange-500 hover:bg-orange-600 font-bold ">
-                      Search Packages
-                    </Button>
-                  </div>
-                </div>
+        <label className="flex items-center gap-2 cursor-pointer relative">
+          <input
+            type="radio"
+            name="tripTypePackage"
+            value="multi"
+          />
+          Group Tour Packages
+        </label>
+
+         <label className="flex items-center gap-2 cursor-pointer relative">
+          <input
+            type="radio"
+            name="tripTypePackage"
+            value="multi"
+          />
+          Domestic Sale Packages
+          <span className="absolute -top-3 -right-8 text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full">
+            NEW
+          </span>
+        </label>
+
+        <span className="ml-auto text-lg  text-black font-bold ">
+          Holiday Packages Booking
+        </span>
+      </div>
+      
+            {/* Booking Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
+              {/* Pickup Location */}
+            <div>
+              <label className="text-xs uppercase font-medium text-slate-500">
+                From City
+              </label>
+              <select
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+                className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+              >
+      
+                <option value="">New Delhi</option>
+                <span>india</span>
+                {indianCities.map((city, index) => (
+                  <option key={index} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+            </div>
+      
+            {/* Drop Location */}
+            <div>
+              <label className="text-xs uppercase font-medium text-slate-500">
+                To City/Country/Category
+              </label>
+              
+              <select
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
+                className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+              >
+                <option value="" className=" flex items-center justify-center ">Mathura</option>
+                {indianCities.map((city, index) => (
+                  <option key={index} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+            </div>
+      
+              {/* Departure Date */}
+        <div className="relative">
+          
+            <label className="text-xs uppercase font-medium text-slate-500">
+              Departure Date
+            </label>
+            
+      
+            {/* Date Display (click to toggle calendar) */}
+            <div
+            
+              className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
+              onClick={() => setOpen(!open)}
+            >
+                
+              <CalendarIcon className="w-5 h-5 text-orange-500 " />
+              <span>
+                {selected
+                  ? selected.toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })
+                  : "Pick a date"}
+              
+           
+              </span>
+        {/* Show weekday */}
+             {selected && (
+              <p className="text-xs text-orange-500 ">
+                {selected.toLocaleDateString("en-US", { weekday: "long" })}
+              </p>
+            )}
+            </div>
+      
+            {/* Calendar Dropdown */}
+            {open && (
+              <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
+                <DayPicker
+                  mode="single"
+                  selected={selected}
+                  onSelect={(date) => {
+                    setSelected(date);
+                    setOpen(false); // ✅ close after selecting date
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+
+      
+              {/* Rooms */}
+              <div>
+              <label className="text-xs uppercase font-medium text-slate-500">
+                Rooms& Guests
+              </label>
+
+              <select name="" id="" className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer">
+                <option value="">Select Rooms</option>
+                <option value="">2 Adult 1 Room</option>
+                <option value="">2 Adult 2 Room</option>
+                <option value="">3 Adult 1 Room</option>  
+                <option value="">3 Adult 2 Room</option>
+                <option value="">4 Adult 1 Room</option>
+                <option value="">4 Adult 2 Room</option>
+                <option value="">5 Adult 1 Room</option>
+                <option value="">5 Adult 2 Room</option>
+
+              </select>
+               
+            </div>
+             
+             {/* Search Button */}
+      <div className="flex justify-center  mt-6">
+                <Button className="w-full md:w-auto px-6 py-3 rounded-sm bg-gray-400 hover:bg-gray-500 text-white font-semibold transition-colors duration-300">
+                  SEARCH PACKAGES
+                </Button>
+              </div>
+             
+            </div>
+              
+          </div>
+              
               </TabsContent>
 
               </Tabs>
@@ -215,6 +390,10 @@ export default function PackagesPage() {
         </div>
       </div>
     </section>
+
+  
+
+   
 
       <Footer />
       </>

@@ -1,17 +1,27 @@
 "use client";
 import Link from "next/link";
-import { Plane, Hotel, Car, Bus, MapPin, Calendar, Clock } from "lucide-react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState } from "react";
+import { Plane, Hotel, Car, Bus, MapPin, Calendar, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { Calendar as CalendarIcon } from "lucide-react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 
 export default function CabsPage() {
   const [tripType, setTripType] = useState("airport");
+  const [selected, setSelected] = useState(new Date());
+    const [open, setOpen] = useState(false); // ✅ state for calendar visibility
+    const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+
+    const [pickupTime, setPickupTime] = useState("10:00");
+  // const [timezone, setTimezone] = useState("Asia/Kolkata");
   const cabs = [
     {
       city: "Cabs From Chennai To",
@@ -48,6 +58,28 @@ export default function CabsPage() {
       cabroutes: "Mumbai, Rajkot, Surat, Pune, Indore",
       image: "/flights/ahmedabad.jpeg",
     },
+  ];
+  const indianCities = [
+    "Delhi",
+    "Mumbai",
+    "Bengaluru",
+    "Chennai",
+    "Kolkata",
+    "Hyderabad",
+    "Pune",
+    "Jaipur",
+    "Ahmedabad",
+    "Lucknow",
+    "Chandigarh",
+    "Goa",
+    "Agra",
+    "Varanasi",
+    "Patna",
+    "Bhopal",
+    "Indore",
+    "Nagpur",
+    "Surat",
+    "Amritsar",
   ];
 
   return (
@@ -136,9 +168,10 @@ export default function CabsPage() {
                 </TabsList>
 
                 <TabsContent value="cabs">
-                  <div className="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-6">
+
+                  <div className="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-3">
       {/* Trip Type Tabs */}
-      <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-gray-700 mb-6">
+      <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-black mb-6">
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="radio"
@@ -169,7 +202,7 @@ export default function CabsPage() {
             checked={tripType === "airport"}
             onChange={(e) => setTripType(e.target.value)}
           />
-          <span className="text-blue-600 font-semibold">Airport Transfers</span>
+          <span className="">Airport Transfers</span>
         </label>
 
         <label className="flex items-center gap-2 cursor-pointer relative">
@@ -181,12 +214,12 @@ export default function CabsPage() {
             onChange={(e) => setTripType(e.target.value)}
           />
           Hourly Rentals
-          <span className="absolute -top-3 -right-8 text-[10px] bg-pink-500 text-white px-2 py-0.5 rounded-full">
+          <span className="absolute -top-3 -right-8 text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full">
             NEW
           </span>
         </label>
 
-        <span className="ml-auto text-sm text-gray-500 font-medium">
+        <span className="ml-auto text-lg  text-black font-bold ">
           Online Cab Booking
         </span>
       </div>
@@ -194,60 +227,143 @@ export default function CabsPage() {
       {/* Booking Grid */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
         {/* Pickup Location */}
-        <div>
-          <label className="text-xs uppercase font-medium text-gray-600">
-            From
-          </label>
-          <Input
-            placeholder="Pick up Location"
-            className="font-bold text-lg border-0 border-b border-gray-300 rounded-none focus:ring-0 px-0"
-          />
-        </div>
+      <div>
+        <label className="text-xs uppercase font-medium text-slate-500">
+          From
+        </label>
+        <select
+          value={from}
+          onChange={(e) => setFrom(e.target.value)}
+          className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+        >
 
-        {/* Drop Location */}
-        <div>
-          <label className="text-xs uppercase font-medium text-gray-600">
-            To
-          </label>
-          <Input
-            placeholder="Drop Location"
-            className="font-bold text-lg border-0 border-b border-gray-300 rounded-none focus:ring-0 px-0"
-          />
-        </div>
+          <option value="">Select Pickup Location</option>
+          {indianCities.map((city, index) => (
+            <option key={index} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Drop Location */}
+      <div>
+        <label className="text-xs uppercase font-medium text-slate-500">
+          To
+        </label>
+        
+        <select
+          value={to}
+          onChange={(e) => setTo(e.target.value)}
+          className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+        >
+          <option value="" className=" flex items-center justify-center ">Select Drop Location</option>
+          {indianCities.map((city, index) => (
+            <option key={index} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+      </div>
 
         {/* Departure Date */}
-        <div>
-          <label className="text-xs uppercase font-medium text-gray-600">
-            Departure
-          </label>
-          <div className="flex items-center gap-2 font-bold text-lg">
-            <Calendar className="w-5 h-5 text-gray-500" />
-            <span>22 Aug'25</span>
-          </div>
-          <p className="text-sm text-gray-400">Friday</p>
+  <div className="relative">
+    
+      <label className="text-xs uppercase font-medium text-slate-500">
+        Departure 
+      </label>
+      
+
+      {/* Date Display (click to toggle calendar) */}
+      <div
+      
+        className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
+        onClick={() => setOpen(!open)}
+      >
+          
+        <CalendarIcon className="w-5 h-5 text-orange-500 " />
+        <span>
+          {selected
+            ? selected.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })
+            : "Pick a date"}
+        
+     
+        </span>
+  {/* Show weekday */}
+       {selected && (
+        <p className="text-xs text-orange-500 ">
+          {selected.toLocaleDateString("en-US", { weekday: "long" })}
+        </p>
+      )}
+      </div>
+
+      {/* Calendar Dropdown */}
+      {open && (
+        <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
+          <DayPicker
+            mode="single"
+            selected={selected}
+            onSelect={(date) => {
+              setSelected(date);
+              setOpen(false); // ✅ close after selecting date
+            }}
+          />
         </div>
+      )}
+    </div>
 
         {/* Pickup Time */}
-        <div>
-          <label className="text-xs uppercase font-medium text-gray-600">
-            Pickup Time
-          </label>
-          <div className="flex items-center gap-2 font-bold text-lg">
-            <Clock className="w-5 h-5 text-gray-500" />
-            <span>10:00 AM</span>
-          </div>
-          <p className="text-sm text-gray-400">
-            pick up time as per journey city timezone
-          </p>
-        </div>
+        <div className="w-full max-w-md mx-auto space-y-2">
+      {/* Label */}
+      <label className="text-xs uppercase font-medium text-slate-500">
+        Pickup Time
+      </label>
 
-        {/* Search Button */}
-        <div className="flex justify-center md:justify-end">
-          <Button className="w-full md:w-auto px-8 py-6 rounded-full bg-gray-400 hover:bg-gray-500 text-white font-bold text-lg">
-            SEARCH
+      {/* Time + Timezone Selector */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 font-bold p-2 border rounded-xl shadow-sm text-base sm:text-lg bg-white">
+        <Clock className="w-5 h-5 text-orange-500 flex-shrink-0" />
+
+        {/* Time Input */}
+        <input
+          type="time"
+          value={pickupTime}
+          onChange={(e) => setPickupTime(e.target.value)}
+          className="w-full sm:w-auto  px-3 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+
+        {/* Timezone Selector */}
+        {/* <select
+          value={timezone}
+          onChange={(e) => setTimezone(e.target.value)}
+          className="w-full sm:w-auto border rounded-lg px-3 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="Asia/Kolkata">India (IST)</option>
+          <option value="America/New_York">New York (EST)</option>
+          <option value="Europe/London">London (GMT)</option>
+          <option value="Asia/Dubai">Dubai (GST)</option>
+        </select> */}
+      </div>
+
+      {/* Info Text */}
+      {/* <p className="text-sm text-gray-500 text-center sm:text-left md:">
+        Pickup time is{" "}
+        <span className="font-semibold">{pickupTime}</span> as per{" "}
+        <span className="font-semibold">{timezone}</span> timezone
+      </p> */}
+    </div>
+       {/* Search Button */}
+<div className="flex justify-center  mt-6">
+          <Button className="w-full md:w-auto px-6 py-3 rounded-sm bg-gray-400 hover:bg-gray-500 text-white font-semibold transition-colors duration-300">
+            SEARCH CABS
           </Button>
         </div>
+       
       </div>
+        
     </div>
                 </TabsContent>
               </Tabs>
