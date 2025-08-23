@@ -25,13 +25,13 @@ export default function PackagesPage() {
         const [from, setFrom] = useState("");
       const [to, setTo] = useState("");
 
-       const [fromCity, setFromCity] = useState("New Delhi");
-  const [toCity, setToCity] = useState("Mathura");
-  const [date, setDate] = useState("2025-08-24");
-  const [adults, setAdults] = useState(2);
+  //      const [fromCity, setFromCity] = useState("New Delhi");
+  // const [toCity, setToCity] = useState("Mathura");
+  // const [date, setDate] = useState("2025-08-24");
+  // const [adults, setAdults] = useState(2);
 
 
-           const indianCities = [
+    const indianCities = [
     "Delhi",
     "Mumbai",
     "Bengaluru",
@@ -225,7 +225,7 @@ export default function PackagesPage() {
           </span>
         </label>
 
-        <span className="ml-auto text-lg  text-black font-bold ">
+        <span className="ml-auto text-lg   font-bold ">
           Holiday Packages Booking
         </span>
       </div>

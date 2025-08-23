@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"; // make sure you have this utility function
 
 export function Card({ children }) {
   return (
-    <div className="rounded-xl border bg- text-black shadow-md p-4">
+    <div className="rounded-xl border bg- text-black  shadow-md p-4">
       {children}
     </div>
   );
@@ -26,7 +26,7 @@ export const CardDescription = forwardRef(function CardDescription(
   ref
 ) {
   return (
-    <p ref={ref} className={cn("text-sm text-gray-500", className)} {...props} />
+    <p ref={ref} className={cn("text-sm text-gray-500 ", className)} {...props} />
   );
 });
 CardDescription.displayName = "CardDescription";

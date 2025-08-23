@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function ContactUsPage() {
   return (

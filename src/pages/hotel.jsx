@@ -23,8 +23,42 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import { useState } from "react";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 
 export default function HotelsPage() {
+   const [selected, setSelected] = useState(new Date());
+        const [open, setOpen] = useState(false); // ✅ state for calendar visibility
+        const [from, setFrom] = useState("");
+      const [to, setTo] = useState("");
+    
+
+        const indianCities = [
+    "Delhi",
+    "Mumbai",
+    "Bengaluru",
+    "Chennai",
+    "Kolkata",
+    "Hyderabad",
+    "Pune",
+    "Jaipur",
+    "Ahmedabad",
+    "Lucknow",
+    "Chandigarh",
+    "Goa",
+    "Agra",
+    "Varanasi",
+    "Patna",
+    "Bhopal",
+    "Indore",
+    "Nagpur",
+    "Surat",
+    "Amritsar",
+  ];
+
+
   const hotels = [
     {
       name: "Holiday Inn Lucknow Airport Hotel",
@@ -214,72 +248,210 @@ export default function HotelsPage() {
                 </TabsList>
 
                 <TabsContent value="hotels">
-                  <div className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white">
-                      {/* City */}
-                      <div className="space-y-2 bg-orange-500  rounded-md">
-                        <Label htmlFor="city">City or Property</Label>
-                        <div className="relative">
-                          <Input id="city" placeholder="Goa" className="pl-10" />
-                          <MapPin className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
+                   <div className="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-3">
+                                        {/* Trip Type Tabs */}
+                        <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-black mb-6">
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name="tripType"
+                            />
+                            Upto 4 Rooms
+                          </label>
+                  
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name="tripType"
+                              value="round"
+                            />
+                            Group Deals
+                             <span className="absolute -top-3 -right-8 text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full">
+                              NEW
+                            </span>
+                          </label>
+                  
+                  
+                          <span className="ml-auto text-lg  font-bold ">
+                            Hotels Booking
+                          </span>
                         </div>
-                      </div>
+                        
+                              {/* Booking Grid */}
+                              <div className="grid grid-cols-1 md:grid-cols-6 gap-6 items-center">
+                                {/* Pickup Location */}
+                              <div>
+                                <label className="text-xs uppercase font-medium text-slate-500">
+                                 City, Country or Category
+                                </label>
+                                <select
+                                  value={from}
+                                  onChange={(e) => setFrom(e.target.value)}
+                                  className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+                                >
+                        
+                                  <option value="">Goa</option>
+                                  <span>india</span>
+                                  {indianCities.map((city, index) => (
+                                    <option key={index} value={city}>
+                                      {city}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                        
+                              {/* Drop Location */}
+                              <div>
+                                <label className="text-xs uppercase font-medium text-slate-500">
+                                  To City/Country/Category
+                                </label>
+                                
+                                <select
+                                  value={to}
+                                  onChange={(e) => setTo(e.target.value)}
+                                  className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+                                >
+                                  <option value="" className=" flex items-center justify-center ">Mathura</option>
+                                  {indianCities.map((city, index) => (
+                                    <option key={index} value={city}>
+                                      {city}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                        
+                                {/* Departure Date */}
+                          <div className="relative">
+                            
+                              <label className="text-xs uppercase font-medium text-slate-500">
+                                Check-In Date
+                              </label>
+                              
+                        
+                              {/* Date Display (click to toggle calendar) */}
+                              <div
+                              
+                                className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
+                                onClick={() => setOpen(!open)}
+                              >
+                                  
+                                <CalendarIcon className="w-5 h-5 text-orange-500 " />
+                                <span>
+                                  {selected
+                                    ? selected.toLocaleDateString("en-GB", {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric",
+                                      })
+                                    : "Pick a date"}
+                                
+                             
+                                </span>
+                          {/* Show weekday */}
+                               {selected && (
+                                <p className="text-xs text-orange-500 ">
+                                  {selected.toLocaleDateString("en-US", { weekday: "long" })}
+                                </p>
+                              )}
+                              </div>
+                        
+                              {/* Calendar Dropdown */}
+                              {open && (
+                                <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
+                                  <DayPicker
+                                    mode="single"
+                                    selected={selected}
+                                    onSelect={(date) => {
+                                      setSelected(date);
+                                      setOpen(false); // ✅ close after selecting date
+                                    }}
+                                  />
+                                </div>
+                              )}
+                            </div>
 
-                      {/* Check-in */}
-                      <div className="space-y-2 bg-orange-500  rounded-md">
-                        <Label htmlFor="checkin">Check-in</Label>
-                        <div className="relative">
-                          <Input
-                            id="checkin"
-                            type="date"
-                            className="pl-10 text-orange-400 justify-center"
-                          />
-                          <Calendar className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                        </div>
-                      </div>
-
-                      {/* Check-out */}
-                      <div className="space-y-2 bg-orange-500  rounded-md">
-                        <Label htmlFor="checkout">Check-out</Label>
-                        <div className="relative">
-                          <Input
-                            id="checkout"
-                            type="date"
-                            className="pl-10 text-orange-400 justify-center"
-                          />
-                          <Calendar className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                        </div>
-                      </div>
-
-                      {/* Guests & Rooms */}
-                      <div className="space-y-2 bg-orange-500  rounded-md">
-                        <Label htmlFor="guests">Guests & Rooms</Label>
-                        <Select>
-                          <SelectTrigger className="w-full h-15 border border-gray-300 rounded-md px-3 py-2 text-2xl uppercase text-orange-400 justify-center font-black bg-background shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400">
-                            <SelectValue placeholder="2 Adults, 1 Room" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="1A-1R">1 Adult, 1 Room</SelectItem>
-                            <SelectItem value="2A-1R">2 Adults, 1 Room</SelectItem>
-                            <SelectItem value="4A-2R">4 Adults, 2 Rooms</SelectItem>
-                            <SelectItem value="2A-1C-1R">
-                              2 Adults, 1 Child, 1 Room
-                            </SelectItem>
-                            <SelectItem value="2A-2C-1R">
-                              2 Adults, 2 Children, 1 Room
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-
-                    {/* Search Button */}
-                    <div className="flex justify-center items-center">
-                      <Button className="w-full justify-center md:w-auto bg-orange-500 hover:bg-orange-600 font-bold">
-                        Search Hotels
-                      </Button>
-                    </div>
-                  </div>
+                            <div className="relative">
+                            
+                              <label className="text-xs uppercase font-medium text-slate-500">
+                                Check-Out Date
+                              </label>
+                              
+                        
+                              {/* Date Display (click to toggle calendar) */}
+                              <div
+                              
+                                className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
+                                onClick={() => setOpen(!open)}
+                              >
+                                  
+                                <CalendarIcon className="w-5 h-5 text-orange-500 " />
+                                <span>
+                                  {selected
+                                    ? selected.toLocaleDateString("en-GB", {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric",
+                                      })
+                                    : "Pick a date"}
+                                
+                             
+                                </span>
+                          {/* Show weekday */}
+                               {selected && (
+                                <p className="text-xs text-orange-500 ">
+                                  {selected.toLocaleDateString("en-US", { weekday: "long" })}
+                                </p>
+                              )}
+                              </div>
+                        
+                              {/* Calendar Dropdown */}
+                              {open && (
+                                <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
+                                  <DayPicker
+                                    mode="single"
+                                    selected={selected}
+                                    onSelect={(date) => {
+                                      setSelected(date);
+                                      setOpen(false); // ✅ close after selecting date
+                                    }}
+                                  />
+                                </div>
+                              )}
+                            </div>
+                  
+                  
+                        
+                                {/* Rooms */}
+                                <div>
+                                <label className="text-xs uppercase font-medium text-slate-500">
+                                  Rooms & Guests
+                                </label>
+                  
+                                <select name="" id="" className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer">
+                                  <option value="">Select Rooms</option>
+                                  <option value="">2 Adult 1 Room</option>
+                                  <option value="">2 Adult 2 Room</option>
+                                  <option value="">3 Adult 1 Room</option>  
+                                  <option value="">3 Adult 2 Room</option>
+                                  <option value="">4 Adult 1 Room</option>
+                                  <option value="">4 Adult 2 Room</option>
+                                  <option value="">5 Adult 1 Room</option>
+                                  <option value="">5 Adult 2 Room</option>
+                  
+                                </select>
+                                 
+                              </div>
+                               
+                               {/* Search Button */}
+                        <div className="flex justify-center  mt-6">
+                                  <Button className="w-full md:w-auto px-6 py-3 rounded-sm bg-gray-400 hover:bg-gray-500 text-white font-semibold transition-colors duration-300">
+                                    SEARCH PACKAGES
+                                  </Button>
+                                </div>
+                               
+                              </div>
+                                
+                            </div>
                 </TabsContent>
               </Tabs>
             </CardContent>
