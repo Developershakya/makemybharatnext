@@ -16,7 +16,7 @@ export default function HolidayPage() {
   const [policiesOpen, setPoliciesOpen] = useState(false);
   const [summaryOpen, setSummaryOpen] = useState(false);
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const galleryData = [
     {
@@ -88,8 +88,8 @@ export default function HolidayPage() {
   }, []);
 
   return (
-    <>
-    
+    < >
+<div className={`${open ? "fixed inset-0 overflow-hidden" : ""}`}>
       {isLarge ? (
         <Header />
       ) : (
@@ -621,6 +621,7 @@ export default function HolidayPage() {
             BOOK NOW
           </button>
         </div>
+      </div>
       </div>
     </>
   );

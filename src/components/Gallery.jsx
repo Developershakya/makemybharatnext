@@ -1,89 +1,115 @@
 "use client";
+import Masonry from "react-masonry-css";
 import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { FiArrowLeft } from "react-icons/fi";
+const breakpointColumnsObj = {
+  default: 4,  // desktop
+  1024: 3,     // tablet
+  768: 2,      // small tablet
+  500: 1       // mobile
+};
 
 export default function Gallery({ images, onClose }) {
-  const [selectedCategory, setSelectedCategory] = useState(images[0]?.category);
+  const [selectedCategory, setSelectedCategory] = useState();
   const [fullImage, setFullImage] = useState(null);
 
   const currentImages =
     images.find((img) => img.category === selectedCategory)?.photos || [];
 
   return (
-    <div className="fixed inset-0 z-9990 bg-blue-50 bg-opacity-70 flex flex-col items-center overflow-auto ">
-      {/* Modal Header */}
-      <div className="w-full flex bg-white justify-between items-center mb-4">
-        <button onClick={onClose} className="flex items-center p-3 ">
-          <FiArrowLeft className="text-gray-500 text-2xl" />
-        </button>
-      </div>
+<div className="fixed inset-0 z-9990 bg-blue-50 bg-opacity-70 flex flex-col overflow-hidden">
+  {/* Modal Header */}
+  <div className="w-full flex sticky top-0 bg-white justify-between items-center mb-4 z-10">
+    <button onClick={onClose} className="flex items-center p-3">
+      <FiArrowLeft className="text-gray-500 text-2xl" />
+    </button>
+  </div>
 
-      {/* Category Slider */}
-      <div className="w-full max-w-7xl p-6 mb-4 overflow-x-auto  flex gap-4">
-        {images.map((img) => (
-          <div
-            key={img.category}
-            className={`flex rounded-lg border-2 overflow-hidden ${
-              selectedCategory === img.category
-                ? "border-blue-500"
-                : "border-transparent"
-            }`}
-            onClick={() => setSelectedCategory(img.category)}
-          >
-            <div className=" text-gray-800 font-semibold bg-white  bg-opacity-50 flex items-center max-w-3xl ">
-              <p className="px-2 text-sm flex py-1 flex-col ">
-               
-                {img.category}
-                <span className="text-gray-500">Photos ({img.photos.length})</span>
-              </p>
+  {/* Categories Scroll */}
+  <div className="w-full max-w-7xl p-6 mb-4 my-scroll flex flex-nowrap gap-4 sticky top-16 z-10 overflow-x-auto">
+    {images.map((img) => (
+      <div
+        key={img.category}
+        className={`flex rounded-lg destructive border-2 overflow-hidden shrink-0 cursor-pointer ${
+          selectedCategory === img.category
+            ? "border-blue-500"
+            : "border-transparent"
+        }`}
+        onClick={() =>
+          setSelectedCategory(
+            selectedCategory === img.category ? null : img.category
+          )
+        }
+      >
+        <p className="px-2 text-sm flex py-1 flex-col">
+          {img.category}
+          <span className="text-gray-500">Photos ({img.photos.length})</span>
+        </p>
 
-              <div>
-                
-                <img
-                  src={img.cover}
-                  alt={img.category}
-                  className="w-20 h-17 object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Images Grid */}
-      <div className="w-full p-6 md:max-w-7xl md:grid gap-4 mb-4 items-center border-gray-400 border-t-1 flex flex-col  md:grid-cols-3">
-        {currentImages.map((photo, index) => (
-          <div
-            key={index}
-            className="cursor-pointer"
-            onClick={() => setFullImage(photo)}
-          >
-            <img
-              src={photo}
-              alt={`Gallery ${index}`}
-              className="md:w-full h-100 w-90 md:h-40  object-cover"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Full Image Modal */}
-      {fullImage && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4">
-          <button
-            className="absolute top-4 right-4 text-white text-3xl"
-            onClick={() => setFullImage(null)}
-          >
-            <RiCloseLine />
-          </button>
+        <div>
           <img
-            src={fullImage}
-            alt="Full"
-            className="max-h-full w-auto max-w-full object-contain "
+            src={img.cover}
+            alt={img.category}
+            className="w-20 h-17 object-cover"
           />
         </div>
-      )}
+      </div>
+    ))}
+  </div>
+
+  {/* Images Grid */}
+  <div className="w-full flex-1 p-6 my-scroll md:max-w-full mb-4 hide-scrollbar border-t border-gray-400 overflow-y-auto">
+    {images
+      .filter(
+        (cat) => !selectedCategory || cat.category === selectedCategory
+      )
+      .map((category) => (
+        <div key={category.category} className="mb-8 w-full">
+          {/* Heading */}
+          <h2 className="text-lg font-semibold mb-4">{category.category}</h2>
+
+          {/* Image Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
+            {category.photos.map((photo, idx) => (
+              <div
+                key={idx}
+                className="cursor-pointer w-full"
+                onClick={() => setFullImage(photo)}
+              >
+                <img
+                  src={photo}
+                  alt={`Gallery ${idx}`}
+                  className="w-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+  </div>
+
+  {/* Full Image Modal */}
+  {fullImage && (
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4">
+      <button
+        className="absolute top-4 right-4 text-white text-3xl"
+        onClick={() => setFullImage(null)}
+      >
+        <RiCloseLine />
+      </button>
+      <img
+        src={fullImage}
+        alt="Full"
+        className="max-h-full w-auto max-w-full object-contain"
+      />
     </div>
+  )}
+</div>
+
+
+
+
+
   );
 }
