@@ -278,11 +278,11 @@ export default function HotelsPage() {
                         </div>
                         
                               {/* Booking Grid */}
-                              <div className="grid grid-cols-1 md:grid-cols-6 gap-6 items-center">
+                              <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
                                 {/* Pickup Location */}
                               <div>
                                 <label className="text-xs uppercase font-medium text-slate-500">
-                                 City, Country or Category
+                                 City / Location / Category
                                 </label>
                                 <select
                                   value={from}
@@ -292,26 +292,6 @@ export default function HotelsPage() {
                         
                                   <option value="">Goa</option>
                                   <span>india</span>
-                                  {indianCities.map((city, index) => (
-                                    <option key={index} value={city}>
-                                      {city}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                        
-                              {/* Drop Location */}
-                              <div>
-                                <label className="text-xs uppercase font-medium text-slate-500">
-                                  To City/Country/Category
-                                </label>
-                                
-                                <select
-                                  value={to}
-                                  onChange={(e) => setTo(e.target.value)}
-                                  className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
-                                >
-                                  <option value="" className=" flex items-center justify-center ">Mathura</option>
                                   {indianCities.map((city, index) => (
                                     <option key={index} value={city}>
                                       {city}

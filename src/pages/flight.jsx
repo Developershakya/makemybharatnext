@@ -8,13 +8,9 @@ import {
   Car,
   Bus,
   MapPin,
-  Calendar,
-  ArrowLeftRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Popover,
@@ -28,7 +24,7 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
 export default function FlightsPage() {
-  const [tripType, setTripType] = useState("roundtrip");
+  const [tripType, setTripType] = useState("oneway");
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
@@ -46,11 +42,11 @@ export default function FlightsPage() {
   const airlines = [
     {
       name: "International",
-      logo: "/flights/inter-flight.jpeg", // <-- apni image path use karo (public/airline/airasia.jpg)
+      logo: "/flights/inter-flight.jpeg", 
     },
     {
       name: "Domestic",
-      logo: "/flights/domestic.jpg", // <-- apni image path use karo (public/airline/cathay.jpg)
+      logo: "/flights/domestic.jpg", 
     },
   ];
 
@@ -155,7 +151,7 @@ export default function FlightsPage() {
             </p>
           </div>
 
-          <Card >
+          <Card>
             <CardContent>
               <Tabs defaultValue="flights" className="w-full">
                 <TabsList className="flex justify-around w-full grid-cols-5  mb-6 bg- ">
@@ -213,8 +209,8 @@ export default function FlightsPage() {
                 <TabsContent value="flights">
                   <div className="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-3">
                     {/* Trip Type Tabs */}
-                    <div className="flex items-center gap-5 mb-6 text-black">
-                      <label className="flex items-center gap-2 ">
+                    <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-black mb-6">
+                      <label className="flex items-center gap-2 cursor-pointer">
                         <input
                           type="radio"
                           name="tripType"
@@ -225,7 +221,7 @@ export default function FlightsPage() {
                         />
                         One Way
                       </label>
-                      <label className="flex items-center gap-2">
+                      <label className="flex items-center gap-2 cursor-pointer">
                         <input
                           type="radio"
                           name="tripType"
@@ -236,12 +232,11 @@ export default function FlightsPage() {
                         />
                         Round Trip
                       </label>
-                      <span className="ml-auto text-lg  font-bold ">
+
+                      <span className="ml-auto text-lg text-black font-bold ">
                         Flights Booking
                       </span>
-                      
                     </div>
-                    
 
                     {/* Booking Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
@@ -336,71 +331,141 @@ export default function FlightsPage() {
                         )}
                       </div>
 
-                      <div className="relative">
-                        <label className="text-xs uppercase font-medium text-slate-500">
-                          Return Date
-                        </label>
+                      {/* Return Date */}
+                      {tripType === "roundtrip" && (
+                        <div className="relative">
+                          <label
+                            htmlFor="return"
+                            className="text-xs uppercase font-medium text-slate-500"
+                          >
+                            Return Date
+                          </label>
+                          <div
+                            className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
+                            onClick={() => setOpen(!open)}
+                          >
+                            <CalendarIcon className="w-5 h-5 text-orange-500 " />
+                            <span>
+                              {selected
+                                ? selected.toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  })
+                                : "Pick a date"}
+                            </span>
+                            {/* Show weekday */}
+                            {selected && (
+                              <p className="text-xs text-orange-500 ">
+                                {selected.toLocaleDateString("en-US", {
+                                  weekday: "long",
+                                })}
+                              </p>
+                            )}
+                          </div>
 
-                        {/* Date Display (click to toggle calendar) */}
-                        <div
-                          className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
-                          onClick={() => setOpen(!open)}
-                        >
-                          <CalendarIcon className="w-5 h-5 text-orange-500 " />
-                          <span>
-                            {selected
-                              ? selected.toLocaleDateString("en-GB", {
-                                  day: "2-digit",
-                                  month: "short",
-                                  year: "numeric",
-                                })
-                              : "Pick a date"}
-                          </span>
-                          {/* Show weekday */}
-                          {selected && (
-                            <p className="text-xs text-orange-500 ">
-                              {selected.toLocaleDateString("en-US", {
-                                weekday: "long",
-                              })}
-                            </p>
+                          {/* Calendar Dropdown */}
+                          {open && (
+                            <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
+                              <DayPicker
+                                mode="single"
+                                selected={selected}
+                                onSelect={(date) => {
+                                  setSelected(date);
+                                  setOpen(false); // ✅ close after selecting date
+                                }}
+                              />
+                            </div>
                           )}
                         </div>
+                      )}
+                      {/* Travelers */}
 
-                        {/* Calendar Dropdown */}
-                        {open && (
-                          <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
-                            <DayPicker
-                              mode="single"
-                              selected={selected}
-                              onSelect={(date) => {
-                                setSelected(date);
-                                setOpen(false); // ✅ close after selecting date
-                              }}
-                            />
-                          </div>
-                        )}
+                      <div className="">
+                        <label
+                          htmlFor="travelers"
+                          className="text-xs uppercase font-medium text-slate-500"
+                        >
+                          Travelers
+                        </label>
+
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button className="w-full justify-start bg-white border border-gray-300 rounded-md px-3 py-3 text-lg font-semibold  shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                              {displayValue || "Select Travelers"}
+                            </button>
+                          </PopoverTrigger>
+
+                          <PopoverContent className="w-72 space-y-4 p-4">
+                            {/* Adults */}
+                            <div className="flex items-center justify-between">
+                              <label htmlFor="adultCount">Adults</label>
+                              <input
+                                type="number"
+                                id="adultCount"
+                                min={1}
+                                max={9}
+                                value={adults}
+                                onChange={(e) =>
+                                  setAdults(Number(e.target.value))
+                                }
+                                className="w-20 w-20 border border-gray-300 rounded-md px-3 py-2  text-center  text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                              />
+                            </div>
+
+                            {/* Children */}
+                            <div className="flex items-center justify-between">
+                              <label htmlFor="childCount">Children</label>
+                              <input
+                                type="number"
+                                id="childCount"
+                                min={0}
+                                max={9}
+                                value={children}
+                                onChange={(e) =>
+                                  setChildren(Number(e.target.value))
+                                }
+                                className="w-20 border border-gray-300 rounded-md px-3 py-2  text-center  text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                              />
+                            </div>
+
+                            {/* Infants */}
+                            <div className="flex items-center justify-between">
+                              <label htmlFor="infantCount">Infants</label>
+                              <input
+                                type="number"
+                                id="infantCount"
+                                min={0}
+                                max={9}
+                                value={infants}
+                                onChange={(e) =>
+                                  setInfants(Number(e.target.value))
+                                }
+                                className="w-20 border border-gray-300 rounded-md px-3 py-2  text-center  text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                              />
+                            </div>
+
+                            {/* Travel Class */}
+                            <div>
+                              <label htmlFor="travelClass">Travel Class</label>
+                              <select
+                                id="travelClass"
+                                value={travelClass}
+                                onChange={(e) => setTravelClass(e.target.value)}
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                              >
+                                <option value="">Choose Travel Class</option>
+                                <option value="Economy">Economy</option>
+                                <option value="Premium Economy">
+                                  Premium Economy
+                                </option>
+                                <option value="Business">Business</option>
+                                <option value="First Class">First Class</option>
+                              </select>
+                            </div>
+                          </PopoverContent>
+                        </Popover>
                       </div>
-
-                      {/* Rooms */}
-                      {/* <div>
-                                                <label className="text-xs uppercase font-medium text-slate-500">
-                                                  Rooms& Guests
-                                                </label>
-                                  
-                                                <select name="" id="" className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer">
-                                                  <option value="">Select Rooms</option>
-                                                  <option value="">2 Adult 1 Room</option>
-                                                  <option value="">2 Adult 2 Room</option>
-                                                  <option value="">3 Adult 1 Room</option>  
-                                                  <option value="">3 Adult 2 Room</option>
-                                                  <option value="">4 Adult 1 Room</option>
-                                                  <option value="">4 Adult 2 Room</option>
-                                                  <option value="">5 Adult 1 Room</option>
-                                                  <option value="">5 Adult 2 Room</option>
-                                  
-                                                </select>
-                                                 
-                                              </div> */}
 
                       {/* Search Button */}
                       <div className="flex justify-center  mt-6">
@@ -478,149 +543,7 @@ export default function FlightsPage() {
         </section>
       </section>
 
-      <section>
-        <div className="space-y-6">
-          {/* Trip Type */}
-          <div className="flex items-center gap-5 mb-6 ">
-            <label className="flex items-center gap-2 ">
-              <input
-                type="radio"
-                name="tripType"
-                value="oneway"
-                checked={tripType === "oneway"}
-                onChange={(e) => setTripType(e.target.value)}
-                className="text-orange-500"
-              />
-              One Way
-            </label>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="tripType"
-                value="roundtrip"
-                checked={tripType === "roundtrip"}
-                onChange={(e) => setTripType(e.target.value)}
-                className="text-orange-500"
-              />
-              Round Trip
-            </label>
-          </div>
-
-          {/* Flight Search Form */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white">
-            <div className="space-y-2   bg-orange-500  rounded-md">
-              <Label htmlFor="from">From</Label>
-              <div className="relative ">
-                <Input id="from" placeholder="Delhi" className="pl-10" />
-                <Plane className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-              </div>
-            </div>
-
-            <div className="space-y-2 bg-orange-500  rounded-md">
-              <Label htmlFor="to">To</Label>
-              <div className="relative">
-                <Input id="to" placeholder="Mumbai" className="pl-10" />
-                <ArrowLeftRight className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-              </div>
-            </div>
-
-            <div className="space-y-2 bg-orange-500  rounded-md">
-              <Label htmlFor="departure">Departure</Label>
-              <div className="relative">
-                <Input
-                  id="departure"
-                  type="date"
-                  className="pl-10 text-orange-400 justify-center"
-                />
-                <Calendar className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-              </div>
-            </div>
-
-            {tripType === "roundtrip" && (
-              <div className="space-y-2 bg-orange-500  rounded-md">
-                <Label htmlFor="return">Return</Label>
-                <div className="relative">
-                  <Input
-                    id="return"
-                    type="date"
-                    className="pl-10 text-orange-400 justify-center"
-                  />
-                  <Calendar className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                </div>
-              </div>
-            )}
-
-            <div className="space-y-2 bg-orange-500  rounded-md">
-              <Label htmlFor="travelers">Travelers</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <button className="w-full h-15 justify-start bg-white border border-gray-300 rounded-md px-3 py-2 text-2xl uppercase font-black text-orange-400 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-50">
-                    {displayValue || "Select Travelers"}
-                  </button>
-                </PopoverTrigger>
-                <PopoverContent className="w-64 space-y-3">
-                  <div>
-                    <Label htmlFor="adultCount">Adults</Label>
-                    <Input
-                      type="number"
-                      id="adultCount"
-                      min={1}
-                      max={9}
-                      value={adults}
-                      onChange={(e) => setAdults(Number(e.target.value))}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="childCount">Children</Label>
-                    <Input
-                      type="number"
-                      id="childCount"
-                      min={0}
-                      max={9}
-                      value={children}
-                      onChange={(e) => setChildren(Number(e.target.value))}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="infantCount">Infants</Label>
-                    <Input
-                      type="number"
-                      id="infantCount"
-                      min={0}
-                      max={9}
-                      value={infants}
-                      onChange={(e) => setInfants(Number(e.target.value))}
-                    />
-                  </div>
-
-                  {/* Travel Class Selection */}
-                  <div>
-                    <Label htmlFor="travelClass">Travel Class</Label>
-                    <select
-                      id="travelClass"
-                      value={travelClass}
-                      onChange={(e) => setTravelClass(e.target.value)}
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
-                    >
-                      <option value="">Choose Travel Class</option>
-                      <option value="Economy">Economy</option>
-                      <option value="Premium Economy">Premium Economy</option>
-                      <option value="Business">Business</option>
-                      <option value="First Class">First Class</option>
-                    </select>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
-
-          <div className=" flex justify-center  items-center">
-            <Button className="w-full justify-center md:w-auto bg-orange-500 hover:bg-orange-600 font-bold ">
-              Search Flights
-            </Button>
-          </div>
-        </div>
-      </section>
+      
 
       <Footer />
     </>
