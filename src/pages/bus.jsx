@@ -1,46 +1,3 @@
-// "use client";
-
-// import Link from "next/link";
-// import { useSearchParams } from "next/navigation";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// export default function BusPage() {
-//   const p = useSearchParams();
-//   const from = p.get("from");
-//   const to = p.get("to");
-//   const date = p.get("date");
-//   const ret = p.get("return");
-
-//   return (
-//     <div className="max-w-5xl mx-auto p-6 space-y-6">
-//       <div className="flex items-center justify-between">
-//         <h1 className="text-2xl font-bold text-orange-600">Bus Tickets</h1>
-//         <Link href="/" className="text-sm underline">← Modify Search</Link>
-//       </div>
-
-//       <Card>
-//         <CardHeader><CardTitle>Search Summary</CardTitle></CardHeader>
-//         <CardContent >
-//           <div><strong>From:</strong> {from}</div>
-//           <div><strong>To:</strong> {to}</div>
-//           <div><strong>Journey Date:</strong> {date}</div>
-//           {ret && <div><strong>Return Date:</strong> {ret}</div>}
-//         </CardContent>
-//       </Card>
-
-//       {/* TODO: Bus API */}
-//       <Card>
-//         <CardHeader><CardTitle>Available Buses</CardTitle></CardHeader>
-//         <CardContent>
-//           <p>Connect your API to list buses...</p>
-//         </CardContent>
-//       </Card>
-//     </div>
-//   );
-// }
-
-
-
 
 "use client";
 // import { useState } from "react";
@@ -51,18 +8,14 @@ import {
   Car,
   Bus,
   MapPin,
-  Calendar,
-  Clock,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
@@ -71,10 +24,22 @@ import "react-day-picker/dist/style.css";
 
 
 export default function BusPage() {
-    const [selected, setSelected] = useState(new Date());
+    const [selected, setSelected] = useState();
       const [open, setOpen] = useState(false); // ✅ state for calendar visibility
       const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
+    const ref = useRef(null);
+
+      // ✅ Close calendar when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   
 
 
@@ -237,8 +202,8 @@ export default function BusPage() {
 
      <TabsContent value="bus">
             <div className="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-3">
-                <div className="text-lg ml-auto   text-black font-bold ">
-          Online Bus Booking
+                <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-black mb-6">
+         <span className="ml-auto text-lg text-black font-bold "> Online Bus Booking</span> 
         </div>
 
       {/* Booking Grid */}
@@ -284,21 +249,17 @@ export default function BusPage() {
       </div>
 
         {/* Departure Date */}
-  <div className="relative">
-    
+   <div className="relative" ref={ref}>
       <label className="text-xs uppercase font-medium text-slate-500">
-        Departure 
+        Departure
       </label>
-      
 
       {/* Date Display (click to toggle calendar) */}
       <div
-      
-        className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
+        className="flex items-center gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm cursor-pointer"
         onClick={() => setOpen(!open)}
       >
-          
-        <CalendarIcon className="w-5 h-5 text-orange-500 " />
+        <CalendarIcon className="w-5 h-5 text-orange-500" />
         <span>
           {selected
             ? selected.toLocaleDateString("en-GB", {
@@ -307,26 +268,25 @@ export default function BusPage() {
                 year: "numeric",
               })
             : "Pick a date"}
-        
-     
         </span>
-  {/* Show weekday */}
-       {selected && (
-        <p className="text-xs text-orange-500 ">
-          {selected.toLocaleDateString("en-US", { weekday: "long" })}
-        </p>
-      )}
+
+        {/* Show weekday */}
+        {selected && (
+          <p className="text-xs text-orange-500">
+            {selected.toLocaleDateString("en-US", { weekday: "long" })}
+          </p>
+        )}
       </div>
 
       {/* Calendar Dropdown */}
       {open && (
-        <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
+        <div className="absolute left-0 mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
           <DayPicker
             mode="single"
             selected={selected}
             onSelect={(date) => {
               setSelected(date);
-              setOpen(false); // ✅ close after selecting date
+              setOpen(false); // ✅ select karte hi band
             }}
           />
         </div>
@@ -381,67 +341,7 @@ export default function BusPage() {
     </section>
 
 
-    <section>
-      <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white">
-                    {/* From Location */}
-                    <div className="space-y-2 bg-orange-500  rounded-md">
-                      <Label htmlFor="from-location">From</Label>
-                      <div className="relative">
-                        <Input
-                          id="from-location"
-                          placeholder="Delhi"
-                          className="pl-10"
-                        />
-                        <MapPin className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                      </div>
-                    </div>
-
-                    {/* To Location */}
-                    <div className="space-y-2 bg-orange-500  rounded-md">
-                      <Label htmlFor="to-location">To</Label>
-                      <div className="relative">
-                        <Input
-                          id="to-location"
-                          placeholder="Manali"
-                          className="pl-10"
-                        />
-                        <MapPin className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                      </div>
-                    </div>
-
-                    {/* Journey Date */}
-                    <div className="space-y-2 bg-orange-500  rounded-md">
-                      <Label htmlFor="journey-date">Journey Date</Label>
-                      <div className="relative">
-                        <Input
-                          id="journey-date"
-                          type="date"
-                          className="pl-10 text-orange-400 justify-center"
-                        />
-                        <Calendar className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                      </div>
-                    </div>
-
-                    {/* Return Date (Optional) */}
-                    <div className="space-y-2  bg-orange-500  rounded-md">
-                      <Label htmlFor="return-date">
-                        Return Date (Optional)
-                      </Label>
-                      <div className="relative">
-                        <Input id="return-date" type="date" className="pl-10 text-orange-400 justify-center" />
-                        <Calendar className="absolute left-3 top-3 w-4 h-4 text-orange-500" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className=" flex justify-center  items-center">
-                    <Button className="w-full justify-center md:w-auto bg-orange-500 hover:bg-orange-600 font-bold ">
-                      Search Buses
-                    </Button>
-                  </div>
-                </div>
-    </section>
+   
 
       <Footer />
       </>

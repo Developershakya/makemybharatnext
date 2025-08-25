@@ -16,11 +16,11 @@ import "react-day-picker/dist/style.css";
 export default function CabsPage() {
   const [tripType, setTripType] = useState("airport");
   const [selected, setSelected] = useState(new Date());
-    const [open, setOpen] = useState(false); // ✅ state for calendar visibility
-    const [from, setFrom] = useState("");
+  const [open, setOpen] = useState(false); // ✅ state for calendar visibility
+  const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
 
-    const [pickupTime, setPickupTime] = useState("10:00");
+  const [pickupTime, setPickupTime] = useState("10:00");
   // const [timezone, setTimezone] = useState("Asia/Kolkata");
   const cabs = [
     {
@@ -168,175 +168,174 @@ export default function CabsPage() {
                 </TabsList>
 
                 <TabsContent value="cabs">
-
                   <div className="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-3">
-      {/* Trip Type Tabs */}
-      <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-black mb-6">
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            name="tripType"
-            value="oneway"
-            checked={tripType === "oneway"}
-            onChange={(e) => setTripType(e.target.value)}
-          />
-          Outstation One-Way
-        </label>
+                    {/* Trip Type Tabs */}
+                    <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-black mb-6">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="tripType"
+                          value="oneway"
+                          checked={tripType === "oneway"}
+                          onChange={(e) => setTripType(e.target.value)}
+                        />
+                        Outstation One-Way
+                      </label>
 
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            name="tripType"
-            value="round"
-            checked={tripType === "round"}
-            onChange={(e) => setTripType(e.target.value)}
-          />
-          Outstation Round-Trip
-        </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="tripType"
+                          value="round"
+                          checked={tripType === "round"}
+                          onChange={(e) => setTripType(e.target.value)}
+                        />
+                        Outstation Round-Trip
+                      </label>
 
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            name="tripType"
-            value="airport"
-            checked={tripType === "airport"}
-            onChange={(e) => setTripType(e.target.value)}
-          />
-          <span className="">Airport Transfers</span>
-        </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="tripType"
+                          value="airport"
+                          checked={tripType === "airport"}
+                          onChange={(e) => setTripType(e.target.value)}
+                        />
+                        <span className="">Airport Transfers</span>
+                      </label>
 
-        <label className="flex items-center gap-2 cursor-pointer relative">
-          <input
-            type="radio"
-            name="tripType"
-            value="hourly"
-            checked={tripType === "hourly"}
-            onChange={(e) => setTripType(e.target.value)}
-          />
-          Hourly Rentals
-          <span className="absolute -top-3 -right-8 text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full">
-            NEW
-          </span>
-        </label>
+                      <label className="flex items-center gap-2 cursor-pointer relative">
+                        <input
+                          type="radio"
+                          name="tripType"
+                          value="hourly"
+                          checked={tripType === "hourly"}
+                          onChange={(e) => setTripType(e.target.value)}
+                        />
+                        Hourly Rentals
+                        <span className="absolute -top-3 -right-8 text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full">
+                          NEW
+                        </span>
+                      </label>
 
-        <span className="ml-auto text-lg  text-black font-bold ">
-          Online Cab Booking
-        </span>
-      </div>
+                      <span className="ml-auto text-lg  text-black font-bold ">
+                        Online Cab Booking
+                      </span>
+                    </div>
 
-      {/* Booking Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
-        {/* Pickup Location */}
-      <div>
-        <label className="text-xs uppercase font-medium text-slate-500">
-          From
-        </label>
-        <select
-          value={from}
-          onChange={(e) => setFrom(e.target.value)}
-          className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
-        >
+                    {/* Booking Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
+                      {/* Pickup Location */}
+                      <div>
+                        <label className="text-xs uppercase font-medium text-slate-500">
+                          From
+                        </label>
+                        <select
+                          value={from}
+                          onChange={(e) => setFrom(e.target.value)}
+                          className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+                        >
+                          <option value="">Select Pickup Location</option>
+                          {indianCities.map((city, index) => (
+                            <option key={index} value={city}>
+                              {city}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-          <option value="">Select Pickup Location</option>
-          {indianCities.map((city, index) => (
-            <option key={index} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
-      </div>
+                      {/* Drop Location */}
+                      <div>
+                        <label className="text-xs uppercase font-medium text-slate-500">
+                          To
+                        </label>
 
-      {/* Drop Location */}
-      <div>
-        <label className="text-xs uppercase font-medium text-slate-500">
-          To
-        </label>
-        
-        <select
-          value={to}
-          onChange={(e) => setTo(e.target.value)}
-          className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
-        >
-          <option value="" className=" flex items-center justify-center ">Select Drop Location</option>
-          {indianCities.map((city, index) => (
-            <option key={index} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
-      </div>
+                        <select
+                          value={to}
+                          onChange={(e) => setTo(e.target.value)}
+                          className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+                        >
+                          <option
+                            value=""
+                            className=" flex items-center justify-center "
+                          >
+                            Select Drop Location
+                          </option>
+                          {indianCities.map((city, index) => (
+                            <option key={index} value={city}>
+                              {city}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-        {/* Departure Date */}
-  <div className="relative">
-    
-      <label className="text-xs uppercase font-medium text-slate-500">
-        Departure 
-      </label>
-      
+                      {/* Departure Date */}
+                      <div className="relative">
+                        <label className="text-xs uppercase font-medium text-slate-500">
+                          Departure
+                        </label>
 
-      {/* Date Display (click to toggle calendar) */}
-      <div
-      
-        className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
-        onClick={() => setOpen(!open)}
-      >
-          
-        <CalendarIcon className="w-5 h-5 text-orange-500 " />
-        <span>
-          {selected
-            ? selected.toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              })
-            : "Pick a date"}
-        
-     
-        </span>
-  {/* Show weekday */}
-       {selected && (
-        <p className="text-xs text-orange-500 ">
-          {selected.toLocaleDateString("en-US", { weekday: "long" })}
-        </p>
-      )}
-      </div>
+                        {/* Date Display (click to toggle calendar) */}
+                        <div
+                          className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
+                          onClick={() => setOpen(!open)}
+                        >
+                          <CalendarIcon className="w-5 h-5 text-orange-500 " />
+                          <span>
+                            {selected
+                              ? selected.toLocaleDateString("en-GB", {
+                                  day: "2-digit",
+                                  month: "short",
+                                  year: "numeric",
+                                })
+                              : "Pick a date"}
+                          </span>
+                          {/* Show weekday */}
+                          {selected && (
+                            <p className="text-xs text-orange-500 ">
+                              {selected.toLocaleDateString("en-US", {
+                                weekday: "long",
+                              })}
+                            </p>
+                          )}
+                        </div>
 
-      {/* Calendar Dropdown */}
-      {open && (
-        <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
-          <DayPicker
-            mode="single"
-            selected={selected}
-            onSelect={(date) => {
-              setSelected(date);
-              setOpen(false); // ✅ close after selecting date
-            }}
-          />
-        </div>
-      )}
-    </div>
+                        {/* Calendar Dropdown */}
+                        {open && (
+                          <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
+                            <DayPicker
+                              mode="single"
+                              selected={selected}
+                              onSelect={(date) => {
+                                setSelected(date);
+                                setOpen(false); // ✅ close after selecting date
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
 
-        {/* Pickup Time */}
-        <div className="w-full max-w-md mx-auto space-y-2">
-      {/* Label */}
-      <label className="text-xs uppercase font-medium text-slate-500">
-        Pickup Time
-      </label>
+                      {/* Pickup Time */}
+                      <div className="w-full max-w-md mx-auto space-y-2">
+                        {/* Label */}
+                        <label className="text-xs uppercase font-medium text-slate-500">
+                          Pickup Time
+                        </label>
 
-      {/* Time + Timezone Selector */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3 font-bold p-2 border rounded-xl shadow-sm text-base sm:text-lg bg-white">
-        <Clock className="w-5 h-5 text-orange-500 flex-shrink-0" />
+                        {/* Time + Timezone Selector */}
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-3 font-bold p-2 border rounded-xl shadow-sm text-base sm:text-lg bg-white">
+                          <Clock className="w-5 h-5 text-orange-500 flex-shrink-0" />
 
-        {/* Time Input */}
-        <input
-          type="time"
-          value={pickupTime}
-          onChange={(e) => setPickupTime(e.target.value)}
-          className="w-full sm:w-auto  px-3 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
+                          {/* Time Input */}
+                          <input
+                            type="time"
+                            value={pickupTime}
+                            onChange={(e) => setPickupTime(e.target.value)}
+                            className="w-full sm:w-auto  px-3 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          />
 
-        {/* Timezone Selector */}
-        {/* <select
+                          {/* Timezone Selector */}
+                          {/* <select
           value={timezone}
           onChange={(e) => setTimezone(e.target.value)}
           className="w-full sm:w-auto border rounded-lg px-3 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -346,25 +345,23 @@ export default function CabsPage() {
           <option value="Europe/London">London (GMT)</option>
           <option value="Asia/Dubai">Dubai (GST)</option>
         </select> */}
-      </div>
+                        </div>
 
-      {/* Info Text */}
-      {/* <p className="text-sm text-gray-500 text-center sm:text-left md:">
+                        {/* Info Text */}
+                        {/* <p className="text-sm text-gray-500 text-center sm:text-left md:">
         Pickup time is{" "}
         <span className="font-semibold">{pickupTime}</span> as per{" "}
         <span className="font-semibold">{timezone}</span> timezone
       </p> */}
-    </div>
-       {/* Search Button */}
-<div className="flex justify-center  mt-6">
-          <Button className="w-full md:w-auto px-6 py-3 rounded-sm bg-gray-400 hover:bg-gray-500 text-white font-semibold transition-colors duration-300">
-            SEARCH CABS
-          </Button>
-        </div>
-       
-      </div>
-        
-    </div>
+                      </div>
+                      {/* Search Button */}
+                      <div className="flex justify-center  mt-6">
+                        <Button className="w-full md:w-auto px-6 py-3 rounded-sm bg-gray-400 hover:bg-gray-500 text-white font-semibold transition-colors duration-300">
+                          SEARCH CABS
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 </TabsContent>
               </Tabs>
             </CardContent>

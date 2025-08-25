@@ -256,7 +256,7 @@ export default function PackagesPage() {
             {/* Drop Location */}
             <div>
               <label className="text-xs uppercase font-medium text-slate-500">
-                To City/Country/Category
+                To City/Category
               </label>
               
               <select
@@ -328,7 +328,7 @@ export default function PackagesPage() {
               {/* Rooms */}
               <div>
               <label className="text-xs uppercase font-medium text-slate-500">
-                Rooms& Guests
+                Rooms & Guests
               </label>
 
               <select name="" id="" className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer">
