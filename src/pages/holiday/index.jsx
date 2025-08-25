@@ -168,7 +168,7 @@ export default function HolidayPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 h-[250px] rounded-xl">
         {/* Left Big Image */}
         <div
-          className="relative rounded-xl overflow-hidden cursor-pointer"
+          className="relative rounded-sm overflow-hidden cursor-pointer"
           onClick={() => setOpen(true)} // <-- yaha click event add kiya
         >
           <img
@@ -185,7 +185,7 @@ export default function HolidayPage() {
         <div className="grid grid-cols-2 gap-3">
           {/* Top Right Image */}
           <div
-            className="relative rounded-xl overflow-hidden cursor-pointer"
+            className="relative rounded-sm overflow-hidden cursor-pointer"
             onClick={() => setOpen(true)}
           >
             <img
@@ -198,7 +198,7 @@ export default function HolidayPage() {
           {/* Bottom Two Small Images */}
           <div className={`grid gap-3 ${isLarge ? "grid-rows-2" : "grid-cols-2"}`}>
             <div
-              className="relative rounded-xl overflow-hidden cursor-pointer"
+              className="relative rounded-sm overflow-hidden cursor-pointer"
               onClick={() => setOpen(true)}
             >
               <img
@@ -208,7 +208,7 @@ export default function HolidayPage() {
               />
             </div>
             <div
-              className="relative rounded-xl overflow-hidden cursor-pointer"
+              className="relative rounded-sm overflow-hidden cursor-pointer"
               onClick={() => setOpen(true)}
             >
               <img

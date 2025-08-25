@@ -27,13 +27,13 @@ export default function Gallery({ images, onClose }) {
   </div>
 
   {/* Categories Scroll */}
-  <div className="w-full max-w-7xl p-6 mb-4 my-scroll flex flex-nowrap gap-4 sticky top-16 z-10 overflow-x-auto">
+  <div className="w-full max-w-7xl md:p-6 md:mb-4 my-scroll flex flex-nowrap gap-4 sticky top-16 z-10 overflow-x-auto">
     {images.map((img) => (
       <div
         key={img.category}
-        className={`flex rounded-lg destructive border-2 overflow-hidden shrink-0 cursor-pointer ${
+        className={`flex md:rounded-lg md:bg-white   md:border-2 overflow-hidden shrink-0 cursor-pointer ${
           selectedCategory === img.category
-            ? "border-blue-500"
+            ? "border-blue-500 border-b-4  "
             : "border-transparent"
         }`}
         onClick={() =>
@@ -47,7 +47,7 @@ export default function Gallery({ images, onClose }) {
           <span className="text-gray-500">Photos ({img.photos.length})</span>
         </p>
 
-        <div>
+        <div className="hidden md:block">
           <img
             src={img.cover}
             alt={img.category}
@@ -65,9 +65,9 @@ export default function Gallery({ images, onClose }) {
         (cat) => !selectedCategory || cat.category === selectedCategory
       )
       .map((category) => (
-        <div key={category.category} className="mb-8 w-full">
+        <div key={category.category} className="mb-8 p-4 w-full">
           {/* Heading */}
-          <h2 className="text-lg font-semibold mb-4">{category.category}</h2>
+          <h2 className="text-3xl font-semibold mb-4">{category.category}</h2>
 
           {/* Image Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
