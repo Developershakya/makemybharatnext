@@ -27,7 +27,7 @@ export default function Gallery({ images, onClose }) {
   </div>
 
   {/* Categories Scroll */}
-  <div className="w-full max-w-7xl md:p-6 md:mb-4 my-scroll flex flex-nowrap gap-4 sticky top-16 z-10 overflow-x-auto">
+  <div className="w-full max-w-7xl md:p-6 md:mb-4 my-scroll flex shadow-lg flex-nowrap gap-4 sticky top-16 z-10 overflow-x-auto">
     {images.map((img) => (
       <div
         key={img.category}
@@ -59,7 +59,7 @@ export default function Gallery({ images, onClose }) {
   </div>
 
   {/* Images Grid */}
-  <div className="w-full flex-1 p-6 my-scroll md:max-w-full mb-4 hide-scrollbar border-t border-gray-400 overflow-y-auto">
+  <div className="w-full flex-1 p-6 my-scroll md:max-w-full mb-4 hide-scrollbar  border-gray-400 overflow-y-auto">
     {images
       .filter(
         (cat) => !selectedCategory || cat.category === selectedCategory
