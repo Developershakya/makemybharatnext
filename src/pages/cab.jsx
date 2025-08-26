@@ -224,7 +224,7 @@ export default function CabsPage() {
                     </div>
 
                     {/* Booking Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-end">
                       {/* Pickup Location */}
                       <div>
                         <label className="text-xs uppercase font-medium text-slate-500">
@@ -355,8 +355,8 @@ export default function CabsPage() {
       </p> */}
                       </div>
                       {/* Search Button */}
-                      <div className="flex justify-center  mt-6">
-                        <Button className="w-full md:w-auto px-6 py-3 rounded-sm bg-gray-400 hover:bg-gray-500 text-white font-semibold transition-colors duration-300">
+                      <div className="col-span-full flex justify-center mt-6">
+                        <Button className="w-full sm:w-auto px-8 py-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold transition-colors duration-300">
                           SEARCH CABS
                         </Button>
                       </div>
