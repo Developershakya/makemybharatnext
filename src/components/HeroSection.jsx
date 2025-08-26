@@ -34,6 +34,10 @@ export default function HeroSection() {
 
 
   // cab
+  const [departureDate, setDepartureDate] = useState(new Date());
+  const [returnDate, setReturnDate] = useState(new Date());
+   const [openDeparture, setOpenDeparture] = useState(false);
+  const [openReturn, setOpenReturn] = useState(false);
   const [selected, setSelected] = useState(new Date());
   const [open, setOpen] = useState(false); // ✅ state for calendar visibility
   const [from, setFrom] = useState("");
@@ -143,7 +147,7 @@ export default function HeroSection() {
                <TabsContent value="flights">
                   <div className="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-3">
                     {/* Trip Type Tabs */}
-                    <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-black mb-6">
+                    <div className="flex flex-wrap items-center gap-4 md:gap-6 text-sm font-medium text-black mb-6">
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input
                           type="radio"
@@ -167,13 +171,13 @@ export default function HeroSection() {
                         Round Trip
                       </label>
 
-                      <span className="ml-auto text-lg text-black font-bold ">
+                      <span className="ml-auto text-base md:text-lg text-black font-bold">
                         Flights Booking
                       </span>
                     </div>
 
                     {/* Booking Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 items-end">
                       {/* Pickup Location */}
                       <div>
                         <label className="text-xs uppercase font-medium text-slate-500">
@@ -185,7 +189,6 @@ export default function HeroSection() {
                           className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
                         >
                           <option value="">Delhi</option>
-                          <span>india</span>
                           {indianCities.map((city, index) => (
                             <option key={index} value={city}>
                               {city}
@@ -199,18 +202,12 @@ export default function HeroSection() {
                         <label className="text-xs uppercase font-medium text-slate-500">
                           To
                         </label>
-
                         <select
                           value={to}
                           onChange={(e) => setTo(e.target.value)}
                           className="w-full font-bold text-orange-500 text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
                         >
-                          <option
-                            value=""
-                            className=" flex items-center justify-center "
-                          >
-                            Mumbai
-                          </option>
+                          <option value="">Mumbai</option>
                           {indianCities.map((city, index) => (
                             <option key={index} value={city}>
                               {city}
@@ -224,112 +221,107 @@ export default function HeroSection() {
                         <label className="text-xs uppercase font-medium text-slate-500">
                           Departure Date
                         </label>
-
-                        {/* Date Display (click to toggle calendar) */}
                         <div
-                          className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
-                          onClick={() => setOpen(!open)}
+                          className="flex flex-wrap md:flex-nowrap items-center gap-2 w-full font-bold text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+                          onClick={() => {
+                            setOpenDeparture(!openDeparture);
+                            setOpenReturn(false);
+                          }}
                         >
-                          <CalendarIcon className="w-5 h-5 text-orange-500 " />
+                          <CalendarIcon className="w-5 h-5 text-orange-500" />
                           <span>
-                            {selected
-                              ? selected.toLocaleDateString("en-GB", {
+                            {departureDate
+                              ? departureDate.toLocaleDateString("en-GB", {
                                   day: "2-digit",
                                   month: "short",
                                   year: "numeric",
                                 })
                               : "Pick a date"}
                           </span>
-                          {/* Show weekday */}
-                          {selected && (
-                            <p className="text-xs text-orange-500 ">
-                              {selected.toLocaleDateString("en-US", {
+                          {departureDate && (
+                            <p className="text-xs text-orange-500">
+                              {departureDate.toLocaleDateString("en-US", {
                                 weekday: "long",
                               })}
                             </p>
                           )}
                         </div>
 
-                        {/* Calendar Dropdown */}
-                        {open && (
+                        {openDeparture && (
                           <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
                             <DayPicker
                               mode="single"
-                              selected={selected}
+                              selected={departureDate}
                               onSelect={(date) => {
-                                setSelected(date);
-                                setOpen(false); // ✅ close after selecting date
+                                setDepartureDate(date);
+                                setOpenDeparture(false);
                               }}
                             />
                           </div>
                         )}
                       </div>
 
-                      {/* Return Date */}
+                      {/* Return Date (only for roundtrip) */}
                       {tripType === "roundtrip" && (
                         <div className="relative">
-                          <label
-                            htmlFor="return"
-                            className="text-xs uppercase font-medium text-slate-500"
-                          >
+                          <label className="text-xs uppercase font-medium text-slate-500">
                             Return Date
                           </label>
                           <div
-                            className="flex items-center  gap-2 w-full justify-center font-bold text-sm border rounded-xl px-3 p-4 bg-white shadow-sm w-fit cursor-pointer"
-                            onClick={() => setOpen(!open)}
+                            className="flex flex-wrap md:flex-nowrap items-center gap-2 w-full font-bold text-sm border rounded-xl px-3 py-4 bg-white shadow-sm cursor-pointer"
+                            onClick={() => {
+                              setOpenReturn(!openReturn);
+                              setOpenDeparture(false);
+                            }}
                           >
-                            <CalendarIcon className="w-5 h-5 text-orange-500 " />
+                            <CalendarIcon className="w-5 h-5 text-orange-500" />
                             <span>
-                              {selected
-                                ? selected.toLocaleDateString("en-GB", {
+                              {returnDate
+                                ? returnDate.toLocaleDateString("en-GB", {
                                     day: "2-digit",
                                     month: "short",
                                     year: "numeric",
                                   })
                                 : "Pick a date"}
                             </span>
-                            {/* Show weekday */}
-                            {selected && (
-                              <p className="text-xs text-orange-500 ">
-                                {selected.toLocaleDateString("en-US", {
+                            {returnDate && (
+                              <p className="text-xs text-orange-500">
+                                {returnDate.toLocaleDateString("en-US", {
                                   weekday: "long",
                                 })}
                               </p>
                             )}
                           </div>
 
-                          {/* Calendar Dropdown */}
-                          {open && (
+                          {openReturn && (
                             <div className="absolute mt-2 p-2 bg-white shadow-lg rounded-xl z-10">
                               <DayPicker
                                 mode="single"
-                                selected={selected}
+                                selected={returnDate}
                                 onSelect={(date) => {
-                                  setSelected(date);
-                                  setOpen(false); // ✅ close after selecting date
+                                  setReturnDate(date);
+                                  setOpenReturn(false);
                                 }}
                               />
                             </div>
                           )}
                         </div>
                       )}
-                      {/* Travelers */}
 
-                      <div className="">
+                      {/* Travelers */}
+                      <div>
                         <label
                           htmlFor="travelers"
                           className="text-xs uppercase font-medium text-slate-500"
                         >
                           Travelers
                         </label>
-
                         <Popover>
                           <PopoverTrigger asChild>
-                            <button className="w-full justify-start bg-white border border-gray-300 rounded-md px-3 py-3 text-lg font-semibold  shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            <button className="w-full justify-start bg-white border border-gray-300 rounded-md px-3 py-3 text-sm md:text-lg font-semibold shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400">
                               {displayValue || "Select Travelers"}
                             </button>
                           </PopoverTrigger>
-
                           <PopoverContent className="w-72 space-y-4 p-4">
                             {/* Adults */}
                             <div className="flex items-center justify-between">
@@ -343,7 +335,7 @@ export default function HeroSection() {
                                 onChange={(e) =>
                                   setAdults(Number(e.target.value))
                                 }
-                                className="w-20 w-20 border border-gray-300 rounded-md px-3 py-2  text-center  text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                                className="w-20 border border-gray-300 rounded-md px-3 py-2 text-center text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
                               />
                             </div>
 
@@ -359,7 +351,7 @@ export default function HeroSection() {
                                 onChange={(e) =>
                                   setChildren(Number(e.target.value))
                                 }
-                                className="w-20 border border-gray-300 rounded-md px-3 py-2  text-center  text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                                className="w-20 border border-gray-300 rounded-md px-3 py-2 text-center text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
                               />
                             </div>
 
@@ -375,7 +367,7 @@ export default function HeroSection() {
                                 onChange={(e) =>
                                   setInfants(Number(e.target.value))
                                 }
-                                className="w-20 border border-gray-300 rounded-md px-3 py-2  text-center  text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                                className="w-20 border border-gray-300 rounded-md px-3 py-2 text-center text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
                               />
                             </div>
 
@@ -402,8 +394,18 @@ export default function HeroSection() {
                       </div>
 
                       {/* Search Button */}
-                      <div className="flex justify-center mt-6">
-                        <Button className="w-full md:w-auto px-6 py-3 rounded-sm bg-gray-400 hover:bg-gray-500 text-white font-semibold transition-colors duration-300">
+                      <div
+                        className={`col-span-1 sm:col-span-2 lg:col-span-1 flex justify-center mt-6 lg:mt-0 ${
+                          tripType === "roundtrip" ? "lg:col-span-5" : ""
+                        }`}
+                      >
+                        <Button
+                          className={`${
+                            tripType === "roundtrip"
+                              ? "w-full sm:w-auto px-6 py-3 rounded-md bg-orange-500 hover:bg-orange-600 text-white font-semibold transition-colors duration-300"
+                              : "w-full lg:w-auto px-6 py-3 rounded-md bg-orange-500 hover:bg-orange-600 text-white font-semibold transition-colors duration-300"
+                          }`}
+                        >
                           SEARCH FLIGHTS
                         </Button>
                       </div>

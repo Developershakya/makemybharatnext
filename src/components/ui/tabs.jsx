@@ -43,7 +43,7 @@ const TabsContent = React.forwardRef(function TabsContent(
   return (
     <TabsPrimitive.Content
       ref={ref}
-      className={cn("mt-2 rounded-md border border-muted bg-black mask-y-from-90% mask-x-to-900%  p-6", className)}
+      className={cn("mt-2 rounded-md border border-muted   p-6", className)}
       {...props}
     />
   )
